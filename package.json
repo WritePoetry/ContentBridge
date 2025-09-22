@@ -2,6 +2,9 @@
   "name": "contentbridge",
   "version": "0.1.0",
   "description": "",
+  "files": [
+		"ContentBridge.php"
+	],
   "directories": {
     "test": "tests"
   },
