@@ -2,6 +2,9 @@
   "require-dev": {
     "wp-cli/i18n-command": "^2"
   },
+  "require": {
+      "afragen/git-updater-lite": "^2.3"
+  },
   "scripts": {
     "makepot": "wp i18n make-pot ."
   }
