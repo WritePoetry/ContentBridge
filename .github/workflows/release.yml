@@ -14,5 +14,3 @@ jobs:
       packages: read
       actions: read
     secrets: inherit
-    with:
-      artifacts_path: 'assets'
