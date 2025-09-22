@@ -1,0 +1,18 @@
+name: Create Release
+run-name: New release from tag ${{ github.ref_name }} by @${{ github.actor }}
+
+on:
+  push:
+    tags:
+      - '[0-9]+\.[0-9]+\.[0-9]+'
+
+jobs:
+  call_shared_release:
+    uses: WritePoetry/reusable-workflows/.github/workflows/release.yml@main
+    permissions:
+      contents: write
+      packages: read
+      actions: read
+    secrets: inherit
+    with:
+      artifacts_path: 'assets'
