@@ -1,13 +1,13 @@
 <?php
 /**
  * Plugin Name:     ContentBridge
- * Plugin URI:      PLUGIN SITE HERE
- * Description:     PLUGIN DESCRIPTION HERE
- * Author:          YOUR NAME HERE
- * Author URI:      YOUR SITE HERE
+ * Plugin URI:      https://github.com/WritePoetry/ContentBridge
+ * Description:     Sends post data to a specified n8n webhook URL upon publication, with JWT authentication.
+ * Author:          Giacomo Secchi
+ * Author URI:      https://resume.giacomosecchi.com/
  * Text Domain:     ContentBridge
  * Domain Path:     /languages
- * Version:         0.1.7
+ * Version:         0.1.8
  *
  * @package         ContentBridge
  * Update URI:      https://wordpress-1181065-5783234.cloudwaysapps.com
@@ -15,7 +15,12 @@
 
 // Your code starts here.
 
+// Load the autoloader.
+if ( is_readable( __DIR__ . '/vendor/autoload.php' ) ) {
+	require_once __DIR__ . '/vendor/autoload.php';
+}
 
+( new \Fragen\Git_Updater\Lite( __FILE__ ) )->run();
 
 
 add_action('transition_post_status', function ( $new_status, $old_status, $post ) {
@@ -149,6 +154,3 @@ function get_vertical_crop_url( $attachment_id, $width = 600, $height = 900 ) {
     $url = str_replace( $upload_dir['basedir'], $upload_dir['baseurl'], $saved['path'] );
     return $url;
 }
-
-
-
