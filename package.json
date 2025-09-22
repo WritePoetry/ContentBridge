@@ -3,12 +3,13 @@
   "version": "0.1.0",
   "description": "",
   "files": [
-		"ContentBridge.php"
-	],
+    "ContentBridge.php"
+  ],
   "directories": {
     "test": "tests"
   },
   "scripts": {
+    "plugin-zip": "wp-scripts plugin-zip",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -22,7 +23,10 @@
   },
   "homepage": "https://github.com/giacomo-secchi/ContentBridge#readme",
   "engines": {
-		"node": "22.18.0",
-		"npm": "10.9.3"
-	}
+    "node": "22.18.0",
+    "npm": "10.9.3"
+  },
+  "devDependencies": {
+    "@wordpress/scripts": "^30.24.0"
+  }
 }
