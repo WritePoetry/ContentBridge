@@ -7,9 +7,10 @@
  * Author URI:      YOUR SITE HERE
  * Text Domain:     ContentBridge
  * Domain Path:     /languages
- * Version:         0.1.0
+ * Version:         0.1.6
  *
  * @package         ContentBridge
+ * Update URI:        https://wordpress-1181065-5783234.cloudwaysapps.com
  */
 
 // Your code starts here.
