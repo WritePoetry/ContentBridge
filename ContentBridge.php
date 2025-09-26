@@ -7,7 +7,7 @@
  * Author URI:      https://resume.giacomosecchi.com/
  * Text Domain:     ContentBridge
  * Domain Path:     /languages
- * Version:         0.1.8
+ * Version:         0.1.9
  *
  * @package         ContentBridge
  * Update URI:      https://wordpress-1181065-5783234.cloudwaysapps.com
@@ -154,3 +154,42 @@ function get_vertical_crop_url( $attachment_id, $width = 600, $height = 900 ) {
     $url = str_replace( $upload_dir['basedir'], $upload_dir['baseurl'], $saved['path'] );
     return $url;
 }
+
+// Hook into WordPress save_post action to trigger when any post or page is saved.
+add_action( 'save_post', function ( $post_id ) {
+    // Skip if this is a post revision or if post is not published.
+    if ( wp_is_post_revision( $post_id ) || get_post_status( $post_id ) != 'publish' ) {
+        return;
+    }
+
+
+	if ( 'post' !== get_post_type( $post_id ) && 'page' !== get_post_type( $post_id ) ) {
+		return;
+	}
+
+    // URL of your deployed Google Apps Script WebApp
+    $web_app_url = WEB_APP_URL;
+
+	// Security token (optional but recommended)
+    $token = WEB_APP_TOKEN;
+
+    // Send asynchronous POST request to trigger the Google Sheets update.
+    $response = wp_remote_post( $web_app_url, [
+        'timeout' => 15,
+        'body' => [ 'token' => $token ]
+    ] );
+
+	// Registra l'errore nei log di WordPress.
+	if ( is_wp_error( $response ) ) {
+		$error_message = $response->get_error_message();
+		
+		error_log(  'Google Sheets Sync Error: ' . $error_message );
+	}
+
+	// Check HTTP response code.
+    $response_code = wp_remote_retrieve_response_code( $response );
+    if ( $response_code !== 200 ) {
+        error_log( 'Google Sheets Sync HTTP Error: ' . $response_code );
+        return;
+    }
+} );
