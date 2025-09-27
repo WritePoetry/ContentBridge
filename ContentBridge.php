@@ -7,7 +7,7 @@
  * Author URI:      https://resume.giacomosecchi.com/
  * Text Domain:     ContentBridge
  * Domain Path:     /languages
- * Version:         0.1.9
+ * Version:         0.1.10
  *
  * @package         ContentBridge
  * Update URI:      https://wordpress-1181065-5783234.cloudwaysapps.com
@@ -158,8 +158,12 @@ function get_vertical_crop_url( $attachment_id, $width = 600, $height = 900 ) {
 // Hook into WordPress save_post action to trigger when any post or page is saved.
 add_action( 'save_post', function ( $post_id ) {
     // Skip if this is a post revision or if post is not published.
-    if ( wp_is_post_revision( $post_id ) || get_post_status( $post_id ) != 'publish' ) {
+    if ( wp_is_post_revision( $post_id ) || wp_is_post_autosave( $post_id ) || get_post_status( $post_id ) != 'publish' ) {
         return;
+    }
+
+    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+    	return;
     }
 
 
@@ -175,9 +179,11 @@ add_action( 'save_post', function ( $post_id ) {
 
     // Send asynchronous POST request to trigger the Google Sheets update.
     $response = wp_remote_post( $web_app_url, [
-        'timeout' => 15,
-        'body' => [ 'token' => $token ]
+    	'timeout' => 30,
+        'headers' => [ 'Content-Type' => 'application/json' ],
+        'body'    => wp_json_encode( [ 'token' => $token, 'post_id' => $post_id ] )
     ] );
+    
 
 	// Registra l'errore nei log di WordPress.
 	if ( is_wp_error( $response ) ) {
