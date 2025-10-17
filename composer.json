@@ -1,11 +1,28 @@
 {
-  "require-dev": {
-    "wp-cli/i18n-command": "^2"
-  },
-  "require": {
-    "afragen/git-updater-lite": "^2.3"
-  },
-  "scripts": {
-    "makepot": "wp i18n make-pot ."
-  }
+    "name": "writepoetry/content-bridge",
+    "description": "Sends post data to n8n via webhook with JWT authentication.",
+    "require": {
+        "afragen/git-updater-lite": "^2.3",
+        "inpsyde/modularity": "^1.12",
+        "php-di/php-di": "^7.1",
+        "php": ">=8.1"
+    },
+    "require-dev": {
+        "wp-cli/i18n-command": "^2.6"
+    },
+    "scripts": {
+        "makepot": "wp i18n make-pot ."
+    },
+    "autoload": {
+        "psr-4": {
+            "WritePoetry\\ContentBridge\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Giacomo Secchi",
+            "email": "info@giacomosecchi.com"
+        }
+    ],
+    "license": "GPL-2.0-or-later"
 }

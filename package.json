@@ -11,7 +11,9 @@
   },
   "scripts": {
     "plugin-zip": "wp-scripts plugin-zip",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "composer": "wp-env run cli --env-cwd=wp-content/plugins/ContentBridge composer",
+    "wp-env": "wp-env"
   },
   "repository": {
     "type": "git",
@@ -28,6 +30,7 @@
     "npm": "10.9.3"
   },
   "devDependencies": {
+    "@wordpress/env": "^10.32.0",
     "@wordpress/scripts": "^30.24.0"
   }
 }
