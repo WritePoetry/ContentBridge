@@ -12,7 +12,7 @@ class HttpClientService
     
     public function post(
         string $url,
-        array $payload, 
+        ?array $payload = null, 
         array $headers = array(),
         int $timeout = 30
     ): void {

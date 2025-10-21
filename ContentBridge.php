@@ -14,8 +14,7 @@
  */
 
 // Your code starts here.
-use WritePoetry\ContentBridge\Services\WebhookService;
-use WritePoetry\ContentBridge\Services\GoogleSheetsService;
+use WritePoetry\ContentBridge\Controllers\PostController;
 
 // Load the autoloader.
 if ( is_readable( __DIR__ . '/vendor/autoload.php' ) ) {
@@ -28,11 +27,11 @@ if ( is_readable( __DIR__ . '/vendor/autoload.php' ) ) {
 $container = require_once __DIR__ . '/bootstrap/container.php';
 
 add_action( 'plugins_loaded', function () use ( $container ) {
-    foreach ( [
-        WebhookService::class,
-        GoogleSheetsService::class,
-    ] as $serviceClass ) {
-        $service = $container->get( $serviceClass );
-        $service->register_hooks();
-    }
+    $container->get( PostController::class )->register_hooks();
+} );
+
+
+add_action( 'plugins_loaded', function() {
+    // Registra la dimensione verticale: 600x900, crop forzato
+    add_image_size( 'vertical', 600, 900, true );
 } );

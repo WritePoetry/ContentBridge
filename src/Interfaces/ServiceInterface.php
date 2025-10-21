@@ -9,5 +9,4 @@ interface ServiceInterface
      *
      * Implementing classes must register all necessary hooks here.
      */
-    public function register_hooks(): void;
 }

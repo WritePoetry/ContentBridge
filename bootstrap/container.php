@@ -1,13 +1,24 @@
 <?php
 
 use DI\ContainerBuilder;
-use WritePoetry\ContentBridge\Adapters\WordPressHttpClientAdapter;
-use WritePoetry\ContentBridge\Interfaces\HttpClientInterface;
-use WritePoetry\ContentBridge\Services\WebhookService;
-use WritePoetry\ContentBridge\Services\JwtGenerator;
-use WritePoetry\ContentBridge\Services\ImageProcessor;
-use WritePoetry\ContentBridge\Services\HttpClientService;
-use WritePoetry\ContentBridge\Services\GoogleSheetsService;
+use WritePoetry\ContentBridge\Controllers\PostController;
+use WritePoetry\ContentBridge\Adapters\{
+    PhpLoggerAdapter,
+    WordPressImageAdapter,
+    WordPressHttpClientAdapter,
+};
+use WritePoetry\ContentBridge\Interfaces\{
+    LoggerInterface,
+    HttpClientInterface,
+    ImageAdapterInterface
+};
+use WritePoetry\ContentBridge\Services\{
+    GoogleSheetsService,
+    HttpClientService,
+    ImageProcessor,
+    JwtGenerator,
+    WebhookService,
+};
 
 
 if ( ! defined( 'N8N_JWT_SECRET' ) ) {
@@ -26,19 +37,32 @@ $builder->addDefinitions( [
             N8N_WEBHOOK_URL,
             N8N_JWT_SECRET,
             DI\get( ImageProcessor::class ),
-            DI\get( HttpClientService::class )
+            DI\get( HttpClientService::class ),
+            DI\get( LoggerInterface::class ),
+            DI\get( ImageAdapterInterface::class )
         ),
     JwtGenerator::class => DI\create( JwtGenerator::class )
         ->constructor( N8N_JWT_SECRET ),
     ImageProcessor::class => DI\create( ImageProcessor::class ),
-    HttpClientService::class => DI\create( HttpClientService::class ),
+    HttpClientService::class => DI\create( HttpClientService::class )
+        ->constructor( 
+            DI\get( HttpClientInterface::class )
+        ),
     GoogleSheetsService::class => DI\create( GoogleSheetsService::class )
         ->constructor(
             DI\get( HttpClientService::class ),
             WEB_APP_URL, // URL of your deployed Google Apps Script WebApp
             WEB_APP_TOKEN // Security token (optional but recommended)
         ),
-    //HttpClientInterface::class => DI\autowire(WordPressHttpClientAdapter::class),
+    PostController::class => DI\create( PostController::class )
+        ->constructor(
+            DI\get( ImageProcessor::class ),
+            DI\get( WebhookService::class )
+        ),
+    HttpClientInterface::class => DI\autowire( WordPressHttpClientAdapter::class ),
+    LoggerInterface::class => DI\autowire( PhpLoggerAdapter::class ),
+    ImageAdapterInterface::class => DI\autowire( WordPressImageAdapter::class )
+
 ] );
 
 $container = $builder->build();
