@@ -4,18 +4,18 @@ namespace WritePoetry\ContentBridge\Services;
 
 use WritePoetry\ContentBridge\Interfaces\HttpClientInterface;
 
-class HttpClientService
-{
+class HttpClientService {
     public function __construct(
         private HttpClientInterface $httpClient
-    ) {}
-    
+    ) {
+    }
+
     public function post(
         string $url,
-        ?array $payload = null, 
+        ?array $payload = null,
         array $headers = array(),
         int $timeout = 30
     ): void {
-        $this->httpClient->post( $url, $payload, $headers, $timeout );
+        $this->httpClient->post($url, $payload, $headers, $timeout);
     }
 }

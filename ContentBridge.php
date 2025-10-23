@@ -27,17 +27,26 @@ if ( is_readable( __DIR__ . '/vendor/autoload.php' ) ) {
 
 $container = require_once __DIR__ . '/bootstrap/container.php';
 
-add_action( 'plugins_loaded', function () use ( $container ) {
-    $container->get( PostController::class )->register_hooks();
-} );
+add_action(
+	'plugins_loaded',
+	function () use ( $container ) {
+		$container->get( PostController::class )->registerHooks();
+	}
+);
 
 
-add_action( 'plugins_loaded', function() {
-    // Registra la dimensione verticale: 600x900, crop forzato
-    add_image_size( 'vertical', 600, 900, true );
-} );
+add_action(
+	'plugins_loaded',
+	function () {
+		// Registra la dimensione verticale: 600x900, crop forzato.
+		add_image_size( 'vertical', 600, 900, true );
+	}
+);
 
 
-add_filter( 'writepoetry_contentbridge_default_featured_image', function($default) {
-    return 21; // nuovo ID immagine di default
-}) ;
+add_filter(
+	'writepoetry_contentbridge_default_featured_image',
+	function () {
+		return 21; // nuovo ID immagine di default.
+	}
+);

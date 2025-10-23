@@ -2,8 +2,7 @@
 
 namespace WritePoetry\ContentBridge\Interfaces;
 
-interface ImageAdapterInterface
-{
+interface ImageAdapterInterface {
     /**
      * Recupera i dati dell'immagine in evidenza di un post.
      *

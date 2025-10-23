@@ -7,9 +7,9 @@ use WritePoetry\ContentBridge\Interfaces\{
     LoggerInterface
 };
 
-class WordPressHttpClientAdapter implements HttpClientInterface
-{
-    public function __construct(private LoggerInterface $logger) {}
+class WordPressHttpClientAdapter implements HttpClientInterface {
+    public function __construct( private LoggerInterface $logger ) {
+    }
 
     public function post(
         string $url,
@@ -18,30 +18,30 @@ class WordPressHttpClientAdapter implements HttpClientInterface
         int $timeout = 30
     ): void {
 
-        $args = [
+        $args = array(
             'timeout' => $timeout,
             'headers' => array_merge(
-                ['Content-Type' => 'application/json'], 
-                $headers    
-            )
-        ];
+                array( 'Content-Type' => 'application/json' ),
+                $headers
+            ),
+        );
 
-        if ( null !== $body ) {
-            $args['body'] = wp_json_encode( $body );
+        if (null !== $body) {
+            $args['body'] = wp_json_encode($body);
         }
 
-        $response = wp_remote_post( $url, $args );
-        $code = wp_remote_retrieve_response_code( $response );
+        $response = wp_remote_post($url, $args);
+        $code     = wp_remote_retrieve_response_code($response);
 
         // Registra l'errore nei log di WordPress.
-        if ( is_wp_error( $response ) ) {
-            $this->logger->error( $response->get_error_message() );
-            throw new \RuntimeException( $response->get_error_message() );
+        if (is_wp_error($response)) {
+            $this->logger->error($response->get_error_message());
+            throw new \RuntimeException($response->get_error_message());
         }
- 
+
         // Check HTTP response code.
-        if ( $code < 200 || $code >= 300 ) {
-            $this->logger->error( 'HTTP POST Unexpected Response Code: ' . $code );
+        if ($code < 200 || $code >= 300) {
+            $this->logger->error('HTTP POST Unexpected Response Code: ' . $code);
         }
     }
 }

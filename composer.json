@@ -3,15 +3,24 @@
     "description": "Sends post data to n8n via webhook with JWT authentication.",
     "require": {
         "afragen/git-updater-lite": "^2.3",
-        "inpsyde/modularity": "^1.12",
         "php-di/php-di": "^7.1",
         "php": ">=8.1"
     },
     "require-dev": {
-        "wp-cli/i18n-command": "^2.6"
+        "wp-cli/i18n-command": "^2.6",
+        "wp-coding-standards/wpcs": "^3.2"
     },
     "scripts": {
-        "makepot": "wp i18n make-pot ."
+        "makepot": "wp i18n make-pot .",
+        "check-cs": [
+			"@php ./vendor/bin/phpcs -ps ."
+		],
+		"fix-cs": [
+			"@php ./vendor/bin/phpcbf --report=summary,source"
+		],
+		"check-all": [
+			"@check-cs"
+		]
     },
     "autoload": {
         "psr-4": {
@@ -24,5 +33,10 @@
             "email": "info@giacomosecchi.com"
         }
     ],
-    "license": "GPL-2.0-or-later"
+    "license": "GPL-2.0-or-later",
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
 }
