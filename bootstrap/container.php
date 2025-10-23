@@ -19,7 +19,7 @@ use WritePoetry\ContentBridge\Services\{
     JwtGenerator,
     WebhookService,
 };
-
+use WritePoetry\ContentBridge\Factories\WebhookPayloadFactory;
 
 if ( ! defined( 'N8N_JWT_SECRET' ) ) {
     throw new \RuntimeException( 'N8N_JWT_SECRET must be defined in wp-config.php or plugin config.' );
@@ -36,10 +36,9 @@ $builder->addDefinitions( [
             DI\get( JwtGenerator::class ),
             N8N_WEBHOOK_URL,
             N8N_JWT_SECRET,
-            DI\get( ImageProcessor::class ),
             DI\get( HttpClientService::class ),
             DI\get( LoggerInterface::class ),
-            DI\get( ImageAdapterInterface::class )
+            DI\get( WebhookPayloadFactory::class )
         ),
     JwtGenerator::class => DI\create( JwtGenerator::class )
         ->constructor( N8N_JWT_SECRET ),
@@ -59,11 +58,18 @@ $builder->addDefinitions( [
             DI\get( ImageProcessor::class ),
             DI\get( WebhookService::class )
         ),
+    WebhookPayloadFactory::class => DI\create( WebhookPayloadFactory::class )
+        ->constructor(
+            DI\get( ImageAdapterInterface::class ),
+            DI\get( ImageProcessor::class )
+        ),
     HttpClientInterface::class => DI\autowire( WordPressHttpClientAdapter::class ),
     LoggerInterface::class => DI\autowire( PhpLoggerAdapter::class ),
     ImageAdapterInterface::class => DI\autowire( WordPressImageAdapter::class )
 
 ] );
+
+
 
 $container = $builder->build();
 

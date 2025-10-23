@@ -5,9 +5,10 @@
  * Description:     Sends post data to a specified n8n webhook URL upon publication, with JWT authentication.
  * Author:          Giacomo Secchi
  * Author URI:      https://resume.giacomosecchi.com/
- * Text Domain:     ContentBridge
+ * Text Domain:     contentbridge
  * Domain Path:     /languages
  * Version:         0.1.10
+ * License:         GPL v2 or later
  *
  * @package         ContentBridge
  * Update URI:      https://wordpress-1181065-5783234.cloudwaysapps.com
@@ -35,3 +36,8 @@ add_action( 'plugins_loaded', function() {
     // Registra la dimensione verticale: 600x900, crop forzato
     add_image_size( 'vertical', 600, 900, true );
 } );
+
+
+add_filter( 'writepoetry_contentbridge_default_featured_image', function($default) {
+    return 21; // nuovo ID immagine di default
+}) ;

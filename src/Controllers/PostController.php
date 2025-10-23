@@ -18,6 +18,7 @@ class PostController
         add_action( 'updated_post_meta', [$this, 'on_thumbnail_set'], 10, 4 );
         add_action( 'transition_post_status', array( $this, 'handle_publish' ), 10, 3 );
         add_action( 'save_post', [$this, 'on_post_saved'], 10, 3 );
+       // add_action( 'post_updated', [$this, 'on_post_updated'], 10, 3 );
     }
 
     public function on_thumbnail_set( int $meta_id, int $object_id, string $meta_key, mixed $_meta_value ): void
