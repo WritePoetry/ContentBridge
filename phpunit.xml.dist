@@ -3,15 +3,23 @@
 	bootstrap="tests/bootstrap.php"
 	backupGlobals="false"
 	colors="true"
-	convertErrorsToExceptions="true"
-	convertWarningsToExceptions="true"
-	convertNoticesToExceptions="true"
-	convertDeprecationsToExceptions="true"
+	failOnWarning="true"
+    failOnDeprecation="true"
+    failOnNotice="true"
 	>
+	<php>
+		<env name="WP_TESTS_DIR" value="/var/folders/29/mss354z113795m26p6lvf2240000gn/T/wordpress-tests-lib"/>
+		<!-- <env name="WP_TESTS_PHPUNIT_POLYFILLS_PATH" value="path/to/yoast/phpunit-polyfills"/> -->
+
+		<env name="N8N_JWT_SECRET" value="test-secret"/>
+		<env name="N8N_WEBHOOK_URL" value="http://test.com"/>
+		<env name="WEB_APP_URL" value="http://test.com"/>
+		<env name="WEB_APP_TOKEN" value="test-token"/>
+	</php>
 	<testsuites>
 		<testsuite name="testing">
-			<directory prefix="test-" suffix=".php">./tests/</directory>
-			<exclude>./tests/test-sample.php</exclude>
+			<directory suffix="Test.php">./tests/</directory>
+			<exclude>./tests/SampleTest.php</exclude>
 		</testsuite>
 	</testsuites>
 </phpunit>

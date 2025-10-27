@@ -14,7 +14,12 @@ class ImageProcessor {
      * @param int $width Larghezza desiderata.
      * @return string path completo del file appena creato sul filesystem.
      */
-    public function cropImage( int $attachmentId, int $width = 600, int $height = 900, string $cropType = 'vertical' ): string {
+    public function cropImage(
+        int $attachmentId,
+        int $width = 600,
+        int $height = 900,
+        string $cropType = 'vertical'
+    ): string {
         if (! wp_attachment_is_image($attachmentId)) {
             return '';
         }
@@ -99,7 +104,12 @@ class ImageProcessor {
      * @param int $width Larghezza desiderata.
      * @return string URL dell'immagine ritagliata.
      */
-    public function cropImageAndGetUrl( int $attachmentId, int $width = 600, int $height = 900, string $cropType = 'vertical' ): string {
+    public function cropImageAndGetUrl(
+        int $attachmentId,
+        int $width = 600,
+        int $height = 900,
+        string $cropType = 'vertical'
+    ): string {
         $path = $this->cropImage($attachmentId, $width, $height, $cropType);
         if (! $path) {
             return '';

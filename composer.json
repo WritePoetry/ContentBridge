@@ -9,7 +9,8 @@
     "require-dev": {
         "wp-cli/i18n-command": "^2.6",
         "wp-coding-standards/wpcs": "^3.2",
-        "phpunit/phpunit": "^11.5"
+        "phpunit/phpunit": "^11.5",
+        "yoast/phpunit-polyfills": "^4.0"
     },
     "scripts": {
         "makepot": "wp i18n make-pot .",
@@ -19,9 +20,19 @@
 		"fix-cs": [
 			"@php ./vendor/bin/phpcbf --report=summary,source"
 		],
+        "test": [
+			"@php ./vendor/bin/phpunit  --testdox"
+		],
 		"check-all": [
 			"@check-cs"
-		]
+		],
+        "watch": [
+            "find ./src ./tests -name '*.php' | entr -c composer test"
+        ],
+        "dev": [
+            "@check-cs",
+            "@test"
+        ]
     },
     "autoload": {
         "psr-4": {

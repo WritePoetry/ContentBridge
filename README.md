@@ -14,3 +14,8 @@ wp post update 123 \
   --post_status=publish \
   --meta_input='{"_thumbnail_id":"21","_yoast_wpseo_metadesc":"Questa è la mia meta description personalizzata"}'
 ```
+
+
+``` bash
+./bin/install-wp-tests.sh wordpress_test root root "localhost:/tmp/mysql_socket/mysqld.sock" latest
+```
