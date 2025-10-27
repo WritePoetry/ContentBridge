@@ -16,7 +16,8 @@ class WebhookPayloadFactory {
     public function make( \WP_Post $post ): array {
         $sizes = $this->imageAdapter->getFeaturedImageData($post->ID);
         // Fallback to default featured image ID if not set.
-        $featuredImageId = get_post_thumbnail_id($post->ID) ?: apply_filters('writepoetry_contentbridge_default_featured_image', null);
+        $featuredImageId = get_post_thumbnail_id($post->ID) 
+        ?: apply_filters('writepoetry_contentbridge_default_featured_image', null);
 
         // Add vertical crop.
         $sizes['vertical'] = $this->imageProcessor->getUrlFromId($featuredImageId, 'vertical');
