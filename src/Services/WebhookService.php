@@ -2,6 +2,7 @@
 
 namespace WritePoetry\ContentBridge\Services;
 
+use WritePoetry\ContentBridge\Config\PluginConfig;
 use WritePoetry\ContentBridge\Interfaces\{
     LoggerInterface,
     ServiceInterface
@@ -10,9 +11,8 @@ use WritePoetry\ContentBridge\Factories\WebhookPayloadFactory;
 
 class WebhookService implements ServiceInterface {
     public function __construct(
+        private PluginConfig $config,
         private JwtGenerator $token,
-        private string $webhookUrl,
-        private string $secret,
         private HttpClientService $httpClient,
         private LoggerInterface $logger,
         private WebhookPayloadFactory $payloadFactory
@@ -22,7 +22,7 @@ class WebhookService implements ServiceInterface {
 
 
     public function send( \WP_Post $post ): void {
-        if (empty($this->webhookUrl) || empty($this->secret)) {
+        if (empty($this->config->get('n8n_webhook_url')) || empty($this->config->get('n8n_jwt_secret'))) {
             return;
         }
 
@@ -35,6 +35,6 @@ class WebhookService implements ServiceInterface {
             )
         );
 
-        $this->httpClient->post($this->webhookUrl, $payload, array( 'Authorization' => 'Bearer ' . $token ), 10);
+        $this->httpClient->post($this->config->get('n8n_webhook_url'), $payload, array( 'Authorization' => 'Bearer ' . $token ), 10);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace WritePoetry\ContentBridge\Services;
 
+
 class JwtGenerator {
     public function __construct(
         private string $secret = 'your-secret',
