@@ -9,30 +9,51 @@ namespace WritePoetry\ContentBridge\Tests;
 
 use PHPUnit\Framework\TestCase;
 use WritePoetry\ContentBridge\Services\JwtGenerator;
+use WritePoetry\ContentBridge\Tests\Environment\TestEnvironment;
+
 
 /**
  * Sample test case.
  */
 class JwtGeneratorTest extends TestCase {
     private string $secret;
+    private TestEnvironment $env;
+    private string $defaultSecret = 'default-secret';
 
     protected function setUp(): void{
         parent::setUp();
-        $this->secret = $_ENV['N8N_JWT_SECRET'] ?? getenv('N8N_JWT_SECRET') ?? 'fallback-secret';
+
+        $this->env = new TestEnvironment([
+            'N8N_JWT_SECRET' => 'fallback-secret',
+        ]);
     }
 
-	public function test_generate_returns_string() {
-        $jwt = new JwtGenerator($this->secret, 3600);
-        $token = $jwt->generate();
-        
+    /**
+     * @dataProvider jwtSecretProvider
+     * Test that JwtGenerator::generate returns a valid JWT string.
+     * @param ?string $customSecret
+     * @return void
+     */
+	public function test_generate_returns_string(?string $customSecret): void {
+        $jwt = new JwtGenerator($this->defaultSecret, 3600);
+
+        $token = $customSecret
+            ? $jwt->generate([], $customSecret)
+            : $jwt->generate();
+
         $this->assertIsString($token);
         $this->assertNotEmpty($token);
 	
 		$this->assertStringMatchesFormat('%s.%s.%s', $token, 'The token should contains exactly two dots, ensuring it has the three-part JWT structure.');
 	}
 
+
+    /**
+     * Test that JwtGenerator::generate includes custom payload data.
+     * @return void
+     */
     public function test_generate_includes_custom_payload() {
-        $jwt = new JwtGenerator($this->secret, 3600);
+        $jwt = new JwtGenerator($this->env->get('N8N_JWT_SECRET'), 3600);
         
         $token = $jwt->generate(['foo' => 'bar']);
 
@@ -44,7 +65,7 @@ class JwtGeneratorTest extends TestCase {
     }
 
     public function test_encode_base64Url() {
-        $jwt = new JwtGenerator($this->secret, 3600);
+        $jwt = new JwtGenerator($this->env->get('N8N_JWT_SECRET'), 3600);
         
         $method = new \ReflectionMethod(JwtGenerator::class, 'base64UrlEncode');
         $method->setAccessible(true);
@@ -52,4 +73,16 @@ class JwtGeneratorTest extends TestCase {
         $result = $method->invokeArgs($jwt, ['test data']);
         $this->assertSame('dGVzdCBkYXRh', $result);
     }
+
+    /**
+     * Data provider for test_generate_returns_string.
+     * 
+     * @return array
+     */
+	public static function jwtSecretProvider(): iterable {
+		return [
+            'default secret' => [null],
+            'custom secret' => ['custom-secret'], 
+		];
+	}
 }

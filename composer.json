@@ -42,6 +42,11 @@
             "WritePoetry\\ContentBridge\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "WritePoetry\\ContentBridge\\Tests\\": "tests/"
+        }
+    },
     "authors": [
         {
             "name": "Giacomo Secchi",

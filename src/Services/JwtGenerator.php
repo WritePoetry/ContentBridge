@@ -17,7 +17,8 @@ class JwtGenerator {
      * @param array $payload Payload aggiuntivo da includere nel token.
      * @return string Il token JWT generato.
      */
-    public function generate( array $payload = array() ): string {
+    public function generate( array $payload = array(), ?string $overrideSecret = null ): string {
+        $secret = $overrideSecret ?? $this->secret;
         // Header
         $header = array(
             'alg' => 'HS256',
@@ -40,7 +41,7 @@ class JwtGenerator {
         $base64UrlPayload = $this->base64UrlEncode(json_encode($payload));
 
         // Signature
-        $signature    = hash_hmac('sha256', "$base64UrlHeader.$base64UrlPayload", $this->secret, true);
+        $signature    = hash_hmac('sha256', "$base64UrlHeader.$base64UrlPayload", $secret, true);
         $base64UrlSig = $this->base64UrlEncode($signature);
 
         // Token
