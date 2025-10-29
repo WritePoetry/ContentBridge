@@ -9,6 +9,11 @@
 
 use DI\ContainerBuilder;
 use WritePoetry\ContentBridge\Config\PluginConfig;
+use WritePoetry\ContentBridge\Environment\{
+	EnvironmentInterface, 
+	WordPressEnvironment
+};
+
 use WritePoetry\ContentBridge\Controllers\PostController;
 use WritePoetry\ContentBridge\Adapters\{
 	PhpLoggerAdapter,
@@ -40,7 +45,10 @@ $builder = new ContainerBuilder();
 
 $builder->addDefinitions(
 	array(
-		PluginConfig::class => DI\create( PluginConfig::class ),
+		PluginConfig::class => DI\create( PluginConfig::class )
+			->constructor(
+				DI\get( EnvironmentInterface::class )
+			),
 		WebhookService::class        => DI\create( WebhookService::class )
 			->constructor(
 				DI\get( PluginConfig::class ),
@@ -74,6 +82,7 @@ $builder->addDefinitions(
 		HttpClientInterface::class   => DI\autowire( WordPressHttpClientAdapter::class ),
 		LoggerInterface::class       => DI\autowire( PhpLoggerAdapter::class ),
 		ImageAdapterInterface::class => DI\autowire( WordPressImageAdapter::class ),
+		EnvironmentInterface::class => DI\autowire(WordPressEnvironment::class),
 
 	)
 );
