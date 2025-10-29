@@ -23,6 +23,9 @@
         "test": [
 			"@php ./vendor/bin/phpunit  --testdox"
 		],
+        "coverage": [
+			"@php ./vendor/bin/phpunit --coverage-html ./coverage-report"
+		],
 		"check-all": [
 			"@check-cs"
 		],

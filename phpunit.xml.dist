@@ -22,4 +22,14 @@
 			<exclude>./tests/SampleTest.php</exclude>
 		</testsuite>
 	</testsuites>
+	<source>
+        <include>
+            <directory suffix=".php">./src</directory>
+        </include>
+        <exclude>
+            <directory>./vendor</directory>
+            <directory>./node_modules</directory>
+            <directory>./tests</directory>
+        </exclude>
+    </source>
 </phpunit>
