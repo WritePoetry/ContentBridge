@@ -35,6 +35,11 @@ class WebhookService implements ServiceInterface {
             )
         );
 
-        $this->httpClient->post($this->config->get('n8n_webhook_url'), $payload, array( 'Authorization' => 'Bearer ' . $token ), 10);
+        $this->httpClient->post(
+            $this->config->get('n8n_webhook_url'),
+            $payload,
+            array( 'Authorization' => 'Bearer ' . $token ),
+            10
+        );
     }
 }

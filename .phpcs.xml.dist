@@ -21,6 +21,7 @@
 	<config name="testVersion" value="5.6-"/>
 	<!-- https://github.com/PHPCompatibility/PHPCompatibilityWP -->
 	<!-- <rule ref="PHPCompatibilityWP"/> -->
+	<rule ref="PSR12" />
 
 	<!-- Rules: WordPress Coding Standards -->
 	<!-- https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards -->
@@ -43,12 +44,5 @@
 			<property name="text_domain" value="contentbridge"/>
 		</properties>
 	</rule>
-	<rule ref="WordPress.WhiteSpace.ControlStructureSpacing">
-		<properties>
-			<property name="blank_line_check" value="true"/>
-		</properties>
-	</rule>
-	<rule ref="PSR12">
-		<include-pattern>src/*</include-pattern>
-	</rule>
+	<rule ref="WordPress.WhiteSpace"/>
 </ruleset>
