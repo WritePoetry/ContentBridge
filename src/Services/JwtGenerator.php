@@ -41,11 +41,11 @@ class JwtGenerator {
         $base64UrlPayload = $this->base64UrlEncode(json_encode($payload));
 
         // Signature
-        $signature    = hash_hmac('sha256', "$base64UrlHeader.$base64UrlPayload", $secret, true);
+        $signature    = hash_hmac('sha256', $base64UrlHeader . '.' . $base64UrlPayload, $secret, true);
         $base64UrlSig = $this->base64UrlEncode($signature);
 
         // Token
-        return "$base64UrlHeader.$base64UrlPayload.$base64UrlSig";
+        return $base64UrlHeader . '.' . $base64UrlPayload . '.' . $base64UrlSig;
     }
 
     private function base64UrlEncode( string $data ): string {

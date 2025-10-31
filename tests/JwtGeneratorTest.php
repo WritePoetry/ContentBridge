@@ -20,6 +20,8 @@ class JwtGeneratorTest extends TestCase {
     private TestEnvironment $env;
     private string $defaultSecret = 'default-secret';
 
+
+
     protected function setUp(): void{
         parent::setUp();
 
@@ -68,7 +70,6 @@ class JwtGeneratorTest extends TestCase {
         $jwt = new JwtGenerator($this->env->get('N8N_JWT_SECRET'), 3600);
         
         $method = new \ReflectionMethod(JwtGenerator::class, 'base64UrlEncode');
-        $method->setAccessible(true);
 
         $result = $method->invokeArgs($jwt, ['test data']);
         $this->assertSame('dGVzdCBkYXRh', $result);

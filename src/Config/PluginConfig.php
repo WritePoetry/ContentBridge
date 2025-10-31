@@ -20,13 +20,17 @@ class PluginConfig {
     private function require(string $key): string {
         $value = $this->env->get($key);
         if (!$value) {
-            throw new \RuntimeException("$key must be defined in the environment or wp-config.php.");
+            throw new \RuntimeException($key.' must be defined in the environment or wp-config.php.');
         }
         return $value;
     }
 
 
     public function get( string $key ): string {
-        return $this->config[$key] ?? throw new \InvalidArgumentException("Config key '$key' not found");
+        if (!isset($this->config[$key])) {
+            throw new \InvalidArgumentException('Config key ' . $key . ' not found');
+        }
+    
+        return $this->config[$key];
     }
 }

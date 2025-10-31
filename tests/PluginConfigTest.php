@@ -27,7 +27,6 @@ class PluginConfigTest extends TestCase {
             'WEB_APP_URL' => 'https://app.example.com',
             'WEB_APP_TOKEN' => 12345, 
         ]);
-
     }
 
     /**
@@ -47,8 +46,6 @@ class PluginConfigTest extends TestCase {
         // $this->assertSame('https://example.com', $config->get('n8n_webhook_url'));
 	}
 
-  
-
 	public static function configKeysProvider(): iterable {
 		return [
             'String value' => [
@@ -61,5 +58,4 @@ class PluginConfigTest extends TestCase {
             ]
 		];
 	}
-    
 }
