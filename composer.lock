@@ -4,67 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e1637c57c9d89598906e431f70b79ba0",
+    "content-hash": "565adbec900c30abf91437db9059ec6f",
     "packages": [
-        {
-            "name": "afragen/git-updater-lite",
-            "version": "2.3.7",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/afragen/git-updater-lite.git",
-                "reference": "55862c61899f82d66863f22fe207a7784be8b213"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/afragen/git-updater-lite/zipball/55862c61899f82d66863f22fe207a7784be8b213",
-                "reference": "55862c61899f82d66863f22fe207a7784be8b213",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.4"
-            },
-            "require-dev": {
-                "squizlabs/php_codesniffer": "3.10.3",
-                "wp-coding-standards/wpcs": "~3.1.0",
-                "yoast/phpunit-polyfills": "^1.1.0"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "Lite.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Andy Fragen",
-                    "email": "andy@thefragens.com",
-                    "homepage": "https://github.com/afragen/git-updater-lite",
-                    "role": "Developer"
-                }
-            ],
-            "description": "A simple class to integrate with Git Updater for standalone plugin/theme updates.",
-            "keywords": [
-                "plugin",
-                "theme",
-                "updater",
-                "wordpress"
-            ],
-            "support": {
-                "issues": "https://github.com/afragen/git-updater-lite/issues",
-                "source": "https://github.com/afragen/git-updater-lite/tree/2.3.7"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/afragen",
-                    "type": "github"
-                }
-            ],
-            "time": "2025-08-03T00:27:41+00:00"
-        },
         {
             "name": "laravel/serializable-closure",
             "version": "v2.0.6",
@@ -306,9 +247,152 @@
                 "source": "https://github.com/php-fig/container/tree/2.0.2"
             },
             "time": "2021-11-05T16:47:00+00:00"
+        },
+        {
+            "name": "writepoetry/github-updater",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "/Users/giacomosecchi/Projects/github-updater",
+                "reference": "cfd2266b655738dfa5a2c4f9d57f8ec7462fa1d0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "WritePoetry\\GithubUpdater\\": "src/"
+                }
+            },
+            "authors": [
+                {
+                    "name": "Giacomo Secchi",
+                    "email": "info@giacomosecchi.com"
+                }
+            ],
+            "transport-options": {
+                "symlink": true,
+                "relative": false
+            }
         }
     ],
     "packages-dev": [
+        {
+            "name": "antecedent/patchwork",
+            "version": "2.2.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/antecedent/patchwork.git",
+                "reference": "8b6b235f405af175259c8f56aea5fc23ab9f03ce"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/antecedent/patchwork/zipball/8b6b235f405af175259c8f56aea5fc23ab9f03ce",
+                "reference": "8b6b235f405af175259c8f56aea5fc23ab9f03ce",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": ">=4"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ignas Rudaitis",
+                    "email": "ignas.rudaitis@gmail.com"
+                }
+            ],
+            "description": "Method redefinition (monkey-patching) functionality for PHP.",
+            "homepage": "https://antecedent.github.io/patchwork/",
+            "keywords": [
+                "aop",
+                "aspect",
+                "interception",
+                "monkeypatching",
+                "redefinition",
+                "runkit",
+                "testing"
+            ],
+            "support": {
+                "issues": "https://github.com/antecedent/patchwork/issues",
+                "source": "https://github.com/antecedent/patchwork/tree/2.2.3"
+            },
+            "time": "2025-09-17T09:00:56+00:00"
+        },
+        {
+            "name": "brain/monkey",
+            "version": "2.6.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Brain-WP/BrainMonkey.git",
+                "reference": "d95a9d895352c30f47604ad1b825ab8fa9d1a373"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Brain-WP/BrainMonkey/zipball/d95a9d895352c30f47604ad1b825ab8fa9d1a373",
+                "reference": "d95a9d895352c30f47604ad1b825ab8fa9d1a373",
+                "shasum": ""
+            },
+            "require": {
+                "antecedent/patchwork": "^2.1.17",
+                "mockery/mockery": "^1.3.5 || ^1.4.4",
+                "php": ">=5.6.0"
+            },
+            "require-dev": {
+                "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
+                "phpcompatibility/php-compatibility": "^9.3.0",
+                "phpunit/phpunit": "^5.7.26 || ^6.0 || ^7.0 || >=8.0 <8.5.12 || ^8.5.14 || ^9.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.x-dev",
+                    "dev-version/1": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "inc/api.php"
+                ],
+                "psr-4": {
+                    "Brain\\Monkey\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Giuseppe Mazzapica",
+                    "email": "giuseppe.mazzapica@gmail.com",
+                    "homepage": "https://gmazzap.me",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Mocking utility for PHP functions and WordPress plugin API",
+            "keywords": [
+                "Monkey Patching",
+                "interception",
+                "mock",
+                "mock functions",
+                "mockery",
+                "patchwork",
+                "redefinition",
+                "runkit",
+                "test",
+                "testing"
+            ],
+            "support": {
+                "issues": "https://github.com/Brain-WP/BrainMonkey/issues",
+                "source": "https://github.com/Brain-WP/BrainMonkey"
+            },
+            "time": "2024-08-29T20:15:04+00:00"
+        },
         {
             "name": "dealerdirect/phpcodesniffer-composer-installer",
             "version": "v1.1.2",
@@ -620,6 +704,57 @@
             "time": "2025-03-19T11:14:02+00:00"
         },
         {
+            "name": "hamcrest/hamcrest-php",
+            "version": "v2.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hamcrest/hamcrest-php.git",
+                "reference": "f8b1c0173b22fa6ec77a81fe63e5b01eba7e6487"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hamcrest/hamcrest-php/zipball/f8b1c0173b22fa6ec77a81fe63e5b01eba7e6487",
+                "reference": "f8b1c0173b22fa6ec77a81fe63e5b01eba7e6487",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.4|^8.0"
+            },
+            "replace": {
+                "cordoval/hamcrest-php": "*",
+                "davedevelopment/hamcrest-php": "*",
+                "kodova/hamcrest-php": "*"
+            },
+            "require-dev": {
+                "phpunit/php-file-iterator": "^1.4 || ^2.0 || ^3.0",
+                "phpunit/phpunit": "^4.8.36 || ^5.7 || ^6.5 || ^7.0 || ^8.0 || ^9.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.1-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "hamcrest"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "This is the PHP port of Hamcrest Matchers",
+            "keywords": [
+                "test"
+            ],
+            "support": {
+                "issues": "https://github.com/hamcrest/hamcrest-php/issues",
+                "source": "https://github.com/hamcrest/hamcrest-php/tree/v2.1.1"
+            },
+            "time": "2025-04-30T06:54:44+00:00"
+        },
+        {
             "name": "mck89/peast",
             "version": "v1.17.4",
             "source": {
@@ -667,6 +802,89 @@
                 "source": "https://github.com/mck89/peast/tree/v1.17.4"
             },
             "time": "2025-10-10T12:53:17+00:00"
+        },
+        {
+            "name": "mockery/mockery",
+            "version": "1.6.12",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mockery/mockery.git",
+                "reference": "1f4efdd7d3beafe9807b08156dfcb176d18f1699"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mockery/mockery/zipball/1f4efdd7d3beafe9807b08156dfcb176d18f1699",
+                "reference": "1f4efdd7d3beafe9807b08156dfcb176d18f1699",
+                "shasum": ""
+            },
+            "require": {
+                "hamcrest/hamcrest-php": "^2.0.1",
+                "lib-pcre": ">=7.0",
+                "php": ">=7.3"
+            },
+            "conflict": {
+                "phpunit/phpunit": "<8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8.5 || ^9.6.17",
+                "symplify/easy-coding-standard": "^12.1.14"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "library/helpers.php",
+                    "library/Mockery.php"
+                ],
+                "psr-4": {
+                    "Mockery\\": "library/Mockery"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Pádraic Brady",
+                    "email": "padraic.brady@gmail.com",
+                    "homepage": "https://github.com/padraic",
+                    "role": "Author"
+                },
+                {
+                    "name": "Dave Marshall",
+                    "email": "dave.marshall@atstsolutions.co.uk",
+                    "homepage": "https://davedevelopment.co.uk",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Nathanael Esayeas",
+                    "email": "nathanael.esayeas@protonmail.com",
+                    "homepage": "https://github.com/ghostwriter",
+                    "role": "Lead Developer"
+                }
+            ],
+            "description": "Mockery is a simple yet flexible PHP mock object framework",
+            "homepage": "https://github.com/mockery/mockery",
+            "keywords": [
+                "BDD",
+                "TDD",
+                "library",
+                "mock",
+                "mock objects",
+                "mockery",
+                "stub",
+                "test",
+                "test double",
+                "testing"
+            ],
+            "support": {
+                "docs": "https://docs.mockery.io/",
+                "issues": "https://github.com/mockery/mockery/issues",
+                "rss": "https://github.com/mockery/mockery/releases.atom",
+                "security": "https://github.com/mockery/mockery/security/advisories",
+                "source": "https://github.com/mockery/mockery"
+            },
+            "time": "2024-05-16T03:13:13+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -906,16 +1124,16 @@
         },
         {
             "name": "phpcsstandards/phpcsextra",
-            "version": "1.4.1",
+            "version": "1.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPCSStandards/PHPCSExtra.git",
-                "reference": "882b8c947ada27eb002870fe77fee9ce0a454cdb"
+                "reference": "8e89a01c7b8fed84a12a2a7f5a23a44cdbe4f62e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPCSStandards/PHPCSExtra/zipball/882b8c947ada27eb002870fe77fee9ce0a454cdb",
-                "reference": "882b8c947ada27eb002870fe77fee9ce0a454cdb",
+                "url": "https://api.github.com/repos/PHPCSStandards/PHPCSExtra/zipball/8e89a01c7b8fed84a12a2a7f5a23a44cdbe4f62e",
+                "reference": "8e89a01c7b8fed84a12a2a7f5a23a44cdbe4f62e",
                 "shasum": ""
             },
             "require": {
@@ -984,7 +1202,7 @@
                     "type": "thanks_dev"
                 }
             ],
-            "time": "2025-09-05T06:54:52+00:00"
+            "time": "2025-10-28T17:00:02+00:00"
         },
         {
             "name": "phpcsstandards/phpcsutils",
@@ -1416,16 +1634,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "11.5.42",
+            "version": "11.5.43",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "1c6cb5dfe412af3d0dfd414cfd110e3b9cfdbc3c"
+                "reference": "c6b89b6cf4324a8b4cb86e1f5dfdd6c9e0371924"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/1c6cb5dfe412af3d0dfd414cfd110e3b9cfdbc3c",
-                "reference": "1c6cb5dfe412af3d0dfd414cfd110e3b9cfdbc3c",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/c6b89b6cf4324a8b4cb86e1f5dfdd6c9e0371924",
+                "reference": "c6b89b6cf4324a8b4cb86e1f5dfdd6c9e0371924",
                 "shasum": ""
             },
             "require": {
@@ -1497,7 +1715,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/11.5.42"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/11.5.43"
             },
             "funding": [
                 {
@@ -1521,7 +1739,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-09-28T12:09:13+00:00"
+            "time": "2025-10-30T08:39:39+00:00"
         },
         {
             "name": "sebastian/cli-parser",
@@ -2647,16 +2865,16 @@
         },
         {
             "name": "symfony/finder",
-            "version": "v7.3.2",
+            "version": "v7.3.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/finder.git",
-                "reference": "2a6614966ba1074fa93dae0bc804227422df4dfe"
+                "reference": "9f696d2f1e340484b4683f7853b273abff94421f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/finder/zipball/2a6614966ba1074fa93dae0bc804227422df4dfe",
-                "reference": "2a6614966ba1074fa93dae0bc804227422df4dfe",
+                "url": "https://api.github.com/repos/symfony/finder/zipball/9f696d2f1e340484b4683f7853b273abff94421f",
+                "reference": "9f696d2f1e340484b4683f7853b273abff94421f",
                 "shasum": ""
             },
             "require": {
@@ -2691,7 +2909,7 @@
             "description": "Finds files and directories via an intuitive fluent interface",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/finder/tree/v7.3.2"
+                "source": "https://github.com/symfony/finder/tree/v7.3.5"
             },
             "funding": [
                 {
@@ -2711,7 +2929,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-07-15T13:41:35+00:00"
+            "time": "2025-10-15T18:45:57+00:00"
         },
         {
             "name": "theseer/tokenizer",
@@ -3199,7 +3417,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": {
+        "writepoetry/github-updater": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

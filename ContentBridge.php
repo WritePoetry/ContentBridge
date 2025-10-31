@@ -16,13 +16,15 @@
 
 // Your code starts here.
 use WritePoetry\ContentBridge\Controllers\PostController;
+use WritePoetry\GithubUpdater\UpdaterFactory;
+
 
 // Load the autoloader.
 if ( is_readable( __DIR__ . '/vendor/autoload.php' ) ) {
 	require_once __DIR__ . '/vendor/autoload.php';
 }
 
-( new \Fragen\Git_Updater\Lite( __FILE__ ) )->run();
+// $updater = UpdaterFactory::createForPlugin(__FILE__, 'username', 'repo');
 
 
 $container = require_once __DIR__ . '/bootstrap/container.php';

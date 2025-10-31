@@ -2,7 +2,7 @@
     "name": "writepoetry/content-bridge",
     "description": "Sends post data to n8n via webhook with JWT authentication.",
     "require": {
-        "afragen/git-updater-lite": "^2.3",
+        "writepoetry/github-updater": "@dev",
         "php-di/php-di": "^7.1",
         "php": ">=8.1"
     },
@@ -10,8 +10,18 @@
         "wp-cli/i18n-command": "^2.6",
         "wp-coding-standards/wpcs": "^3.2",
         "phpunit/phpunit": "^11.5",
-        "yoast/phpunit-polyfills": "^4.0"
+        "yoast/phpunit-polyfills": "^4.0",
+        "brain/monkey": "^2.6"
     },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "~/Projects/github-updater",
+            "options": {
+                "symlink": true
+            }
+        }
+    ],
     "scripts": {
         "makepot": "wp i18n make-pot .",
         "check-cs": [
