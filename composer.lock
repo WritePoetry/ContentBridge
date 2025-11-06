@@ -254,12 +254,20 @@
             "dist": {
                 "type": "path",
                 "url": "/Users/giacomosecchi/Projects/github-updater",
-                "reference": "cfd2266b655738dfa5a2c4f9d57f8ec7462fa1d0"
+                "reference": "de62575b28df3b12588915ff9ee55c2adcda4825"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^11.5"
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
                     "WritePoetry\\GithubUpdater\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "WritePoetry\\GithubUpdater\\Tests\\": "tests/"
                 }
             },
             "authors": [

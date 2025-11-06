@@ -16,7 +16,7 @@
     "repositories": [
         {
             "type": "path",
-            "url": "~/Projects/github-updater",
+            "url": "/Users/giacomosecchi/Projects/github-updater",
             "options": {
                 "symlink": true
             }
