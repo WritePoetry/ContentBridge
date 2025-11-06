@@ -46,6 +46,7 @@ class JwtGenerator {
 
         // Token
         return $base64UrlHeader . '.' . $base64UrlPayload . '.' . $base64UrlSig;
+        
     }
 
     private function base64UrlEncode( string $data ): string {

@@ -8,7 +8,7 @@
     failOnNotice="true"
 	>
 	<php>
-		<env name="WP_TESTS_DIR" value="/var/folders/29/mss354z113795m26p6lvf2240000gn/T/wordpress-tests-lib"/>
+		<!-- <env name="WP_TESTS_DIR" value=""/> -->
 		<!-- <env name="WP_TESTS_PHPUNIT_POLYFILLS_PATH" value="path/to/yoast/phpunit-polyfills"/> -->
 
 		<env name="N8N_JWT_SECRET" value="test-secret"/>
