@@ -7,7 +7,12 @@ on:
       - '[0-9]+\.[0-9]+\.[0-9]+'
 
 jobs:
+  run_tests_first:
+    uses: WritePoetry/reusable-workflows/.github/workflows/php-tests.yml@main
+    secrets: inherit
+
   call_shared_release:
+    needs: run_tests_first
     uses: WritePoetry/reusable-workflows/.github/workflows/release.yml@main
     permissions:
       contents: write

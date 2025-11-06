@@ -1,0 +1,16 @@
+name: Run Plugin Tests
+run-name: Run tests for ${{ github.repository }} by @${{ github.actor }}
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  call_shared_tests:
+    uses: WritePoetry/reusable-workflows/.github/workflows/php-tests.yml@main
+    permissions:
+      contents: read
+      actions: read
+    secrets: inherit
