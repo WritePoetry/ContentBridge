@@ -7,7 +7,7 @@ wp post create \
   --post_title="Titolo del mio post 7" \
   --post_content="Questo è il contenuto del post" \
   --post_status=publish \
-  --meta_input='{"_thumbnail_id":"2929","_yoast_wpseo_metadesc":"Questa è la mia meta description personalizzata"}'
+  --meta_input='{"_thumbnail_id":"12","_yoast_wpseo_metadesc":"Questa è la mia meta description personalizzata"}'
 ```
 Updates an existing post (ID 123) by changing the title, content, status, and metadata.
 ``` bash

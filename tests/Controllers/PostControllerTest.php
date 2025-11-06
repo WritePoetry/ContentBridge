@@ -8,6 +8,7 @@
 namespace WritePoetry\ContentBridge\Tests;
 
 use PHPUnit\Framework\TestCase;
+use Mockery;
 use Brain\Monkey;
 use Brain\Monkey\Functions;
 use WritePoetry\ContentBridge\Controllers\PostController;
@@ -48,7 +49,7 @@ class PostControllerTest extends TestCase {
     public function test_register_hooks_adds_actions(): void
     {
         Functions\expect('add_action')
-            ->times(3)
+            ->times(4)
             ->withAnyArgs();
 
         $this->controller->registerHooks();
@@ -65,57 +66,67 @@ class PostControllerTest extends TestCase {
         Functions\expect('add_action')
             ->once()
             ->with('save_post', [$this->controller, 'onPostSaved'], 10, 3);
+
+        Functions\expect('add_action')
+            ->once()
+            ->with('post_updated', [$this->controller, 'handleUpdate'], 10, 3);
         
         $this->controller->registerHooks();
         $this->addToAssertionCount(1);
     }
 
     public function test_on_thumbnail_set_calls_cropimage_when_key_matches(): void {
-        $imageProcessor = $this->createMock(ImageProcessor::class);
-        $webhook = $this->createMock(WebhookService::class);
-        
-        $controller = new PostController($imageProcessor, $webhook);
-
-        $imageProcessor->expects($this->once())
+      
+        $this->imageProcessor->expects($this->once())
             ->method('cropImage')
             ->with(123, 600, 900, 'vertical');
 
-        $controller->onThumbnailSet(1, 2, '_thumbnail_id', 123);
+        $this->controller->onThumbnailSet(1, 2, '_thumbnail_id', 123);
     }
 
-    public function test_on_post_saved_sends_webhook_when_valid(): void {
-        $webhook = $this->createMock(WebhookService::class);
-        $imageProcessor = $this->createMock(ImageProcessor::class);
-        $controller = new PostController($imageProcessor, $webhook);
+    /**
+     * Test that on_post_saved sends a webhook when the post is valid.
+     * @runTestsInSeparateProcesses
+     * @preserveGlobalState disabled
+     * @return void
+     */
+    public function  test_on_post_saved_sends_webhook_when_valid(): void {
 
-       // $post = $this->createStub(\WP_Post::class);
+        // Create a mock WP_Post object
+        $post = Mockery::mock('overload:WP_Post');
+        $post->post_type = 'post';
+        $post->post_status = 'publish';
+        $post->ID = 1;
 
         Functions\when('wp_is_post_revision')->justReturn(false);
         Functions\when('wp_is_post_autosave')->justReturn(false);
         Functions\when('get_post_status')->justReturn('publish');
         Functions\when('get_post_type')->justReturn('post');
-        if (defined('DOING_AUTOSAVE')) { runkit_constant_remove('DOING_AUTOSAVE'); }
 
-        // $webhook->expects($this->once())->method('send')->with($post);
+        $this->webhookService->expects($this->once())->method('send')->with($post);
 
-        // $controller->onPostSaved(1, $post, false);
-    
-        $this->markTestSkipped('Temporarily disabled');
+        $this->controller->onPostSaved(1, $post, false);
 
     }
 
+    /**
+     * Test that handle_publish sends a webhook when a post is published.
+     * @return void
+     */
     public function test_handle_publish_sends_webhook_when_post_published(): void {
-        $webhook = $this->createMock(WebhookService::class);
-        $imageProcessor = $this->createMock(ImageProcessor::class);
-        $controller = new PostController($imageProcessor, $webhook);
 
-        // $post = new \WP_Post((object)['post_type' => 'post']);
-        // $webhook->expects($this->once())->method('send')->with($post);
+        // Create a mock WP_Post object
+        $post = Mockery::mock('overload:WP_Post');
+        $post->post_type = 'post';
+        $post->post_status = 'publish';
+        $post->ID = 1;
 
-        // $controller->handlePublish('publish', 'draft', $post);
+    
+        $this->webhookService->expects($this->once())
+            ->method('send')
+            ->with($this->equalTo($post));
 
-        $this->markTestSkipped('Temporarily disabled');
-
+        $this->controller->handlePublish('publish', 'draft', $post);
     }
 
 }
