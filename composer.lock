@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "733786e6d0d9dedf253a102f7dacd2dd",
+    "content-hash": "1f31deb12be18692d618a1673820080f",
     "packages": [
         {
             "name": "afragen/git-updater-lite",
@@ -3450,7 +3450,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=8.1"
+        "php": ">=8.2"
     },
     "platform-dev": {},
     "plugin-api-version": "2.6.0"

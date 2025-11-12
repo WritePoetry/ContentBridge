@@ -11,7 +11,7 @@ jobs:
   call_shared_tests:
     uses: WritePoetry/reusable-workflows/.github/workflows/php-tests.yml@main
     with:
-      php_versions: "['8.1', '8.2']"
+      php_versions: "['8.2']"
     permissions:
       contents: read
       actions: read
