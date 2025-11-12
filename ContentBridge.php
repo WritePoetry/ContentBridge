@@ -24,7 +24,7 @@ if ( is_readable( __DIR__ . '/vendor/autoload.php' ) ) {
 	require_once __DIR__ . '/vendor/autoload.php';
 }
 
-$updater = UpdaterFactory::createForPlugin(__FILE__, 'username', 'repo');
+( new \Fragen\Git_Updater\Lite( __FILE__ ) )->run();
 
 
 $container = require_once __DIR__ . '/bootstrap/container.php';
