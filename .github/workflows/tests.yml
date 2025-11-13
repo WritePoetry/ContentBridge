@@ -16,4 +16,3 @@ jobs:
       contents: read
       actions: read
     secrets: inherit
-
