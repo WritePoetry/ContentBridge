@@ -7,8 +7,10 @@ use WritePoetry\ContentBridge\Interfaces\{
     LoggerInterface
 };
 
-class WordPressHttpClientAdapter implements HttpClientInterface {
-    public function __construct( private LoggerInterface $logger ) {
+class WordPressHttpClientAdapter implements HttpClientInterface
+{
+    public function __construct(private LoggerInterface $logger)
+    {
     }
 
     public function post(

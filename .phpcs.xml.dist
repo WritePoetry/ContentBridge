@@ -18,20 +18,15 @@
 
 	<!-- Rules: Check PHP version compatibility -->
 	<!-- https://github.com/PHPCompatibility/PHPCompatibility#sniffing-your-code-for-compatibility-with-specific-php-versions -->
-	<config name="testVersion" value="5.6-"/>
+	<config name="testVersion" value="8.0-"/>
 	<!-- https://github.com/PHPCompatibility/PHPCompatibilityWP -->
-	<!-- <rule ref="PHPCompatibilityWP"/> -->
+	<rule ref="PHPCompatibilityWP"/>
 	<rule ref="PSR12" />
 
 	<!-- Rules: WordPress Coding Standards -->
 	<!-- https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards -->
 	<!-- https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards/wiki/Customizable-sniff-properties -->
 	<config name="minimum_supported_wp_version" value="4.6"/>
-	<rule ref="WordPress">
-		<exclude-pattern>src/*</exclude-pattern>
-		<exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
-		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase"/>
-	</rule>
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
 		<properties>
 			<!-- Value: replace the function, class, and variable prefixes used. Separate multiple prefixes with a comma. -->
@@ -44,5 +39,7 @@
 			<property name="text_domain" value="contentbridge"/>
 		</properties>
 	</rule>
-	<rule ref="WordPress.WhiteSpace"/>
+	<rule ref="PSR1.Methods.CamelCapsMethodName.NotCamelCaps">
+        <exclude-pattern>/tests/</exclude-pattern>
+    </rule>
 </ruleset>

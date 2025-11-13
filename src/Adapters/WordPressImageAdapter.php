@@ -1,16 +1,18 @@
 <?php
 
-
 namespace WritePoetry\ContentBridge\Adapters;
 
 use WritePoetry\ContentBridge\Interfaces\ImageAdapterInterface;
 use WritePoetry\ContentBridge\Services\ImageProcessor;
 
-class WordPressImageAdapter implements ImageAdapterInterface {
-    public function __construct( private ImageProcessor $imageProcessor ) {
+class WordPressImageAdapter implements ImageAdapterInterface
+{
+    public function __construct(private ImageProcessor $imageProcessor)
+    {
     }
 
-    public function getFeaturedImageData( int $postId ): ?array {
+    public function getFeaturedImageData(int $postId): ?array
+    {
 
         $imageId = get_post_thumbnail_id($postId);
         if (! $imageId) {

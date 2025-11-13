@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Plugin Name:     ContentBridge
  * Plugin URI:      https://github.com/WritePoetry/ContentBridge
@@ -18,37 +19,36 @@
 use WritePoetry\ContentBridge\Controllers\PostController;
 use WritePoetry\GithubUpdater\UpdaterFactory;
 
-
 // Load the autoloader.
-if ( is_readable( __DIR__ . '/vendor/autoload.php' ) ) {
-	require_once __DIR__ . '/vendor/autoload.php';
+if (is_readable(__DIR__ . '/vendor/autoload.php')) {
+    require_once __DIR__ . '/vendor/autoload.php';
 }
 
-( new \Fragen\Git_Updater\Lite( __FILE__ ) )->run();
+( new \Fragen\Git_Updater\Lite(__FILE__) )->run();
 
 
 $container = require_once __DIR__ . '/bootstrap/container.php';
 
 add_action(
-	'plugins_loaded',
-	function () use ( $container ) {
-		$container->get( PostController::class )->registerHooks();
-	}
+    'plugins_loaded',
+    function () use ($container) {
+        $container->get(PostController::class)->registerHooks();
+    }
 );
 
 
 add_action(
-	'plugins_loaded',
-	function () {
-		// Registra la dimensione verticale: 600x900, crop forzato.
-		add_image_size( 'vertical', 600, 900, true );
-	}
+    'plugins_loaded',
+    function () {
+        // Registra la dimensione verticale: 600x900, crop forzato.
+        add_image_size('vertical', 600, 900, true);
+    }
 );
 
 
 add_filter(
-	'writepoetry_contentbridge_default_featured_image',
-	function () {
-		return 21; // nuovo ID immagine di default.
-	}
+    'writepoetry_contentbridge_default_featured_image',
+    function () {
+        return 21; // nuovo ID immagine di default.
+    }
 );

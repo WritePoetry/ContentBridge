@@ -1,9 +1,9 @@
 <?php
 
-
 namespace WritePoetry\ContentBridge\Interfaces;
 
-interface HttpClientInterface {
+interface HttpClientInterface
+{
     /**
      * Send a POST request to the specified URL with given payload and headers.
      *
@@ -14,5 +14,5 @@ interface HttpClientInterface {
      *
      * @return void
      */
-    public function post( string $url, ?array $body = null, array $headers = array(), int $timeout = 30 ): void;
+    public function post(string $url, ?array $body = null, array $headers = array(), int $timeout = 30): void;
 }

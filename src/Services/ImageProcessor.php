@@ -2,8 +2,10 @@
 
 namespace WritePoetry\ContentBridge\Services;
 
-class ImageProcessor {
-    public function __construct() {
+class ImageProcessor
+{
+    public function __construct()
+    {
     }
 
     /**
@@ -82,13 +84,15 @@ class ImageProcessor {
      * @param string $filePath Percorso completo del file.
      * @return string URL dell'immagine.
      */
-    public function getUrlFromPath( string $filePath ): string {
+    public function getUrlFromPath(string $filePath): string
+    {
         // Ottieni URL.
         $uploadDir = wp_upload_dir();
         return str_replace($uploadDir['basedir'], $uploadDir['baseurl'], $filePath);
     }
 
-    public function getUrlFromId( int $attachmentId, string $cropType ): string {
+    public function getUrlFromId(int $attachmentId, string $cropType): string
+    {
         $url = wp_get_attachment_image_src($attachmentId, $cropType)[0];
         if (! $url) {
             return '';

@@ -2,8 +2,8 @@
 
 namespace WritePoetry\ContentBridge\Services;
 
-
-class JwtGenerator {
+class JwtGenerator
+{
     public function __construct(
         private string $secret = 'your-secret',
         private int $ttl = 3600,
@@ -17,7 +17,8 @@ class JwtGenerator {
      * @param array $payload Payload aggiuntivo da includere nel token.
      * @return string Il token JWT generato.
      */
-    public function generate( array $payload = array(), ?string $overrideSecret = null ): string {
+    public function generate(array $payload = array(), ?string $overrideSecret = null): string
+    {
         $secret = $overrideSecret ?? $this->secret;
         // Header
         $header = array(
@@ -46,10 +47,10 @@ class JwtGenerator {
 
         // Token
         return $base64UrlHeader . '.' . $base64UrlPayload . '.' . $base64UrlSig;
-        
     }
 
-    private function base64UrlEncode( string $data ): string {
+    private function base64UrlEncode(string $data): string
+    {
         return rtrim(strtr(base64_encode($data), '+/', '-_'), '=');
     }
 }

@@ -2,7 +2,8 @@
 
 namespace WritePoetry\ContentBridge\Interfaces;
 
-interface ServiceInterface {
+interface ServiceInterface
+{
     /**
      * Register hooks to WordPress actions or filters.
      *

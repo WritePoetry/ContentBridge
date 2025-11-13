@@ -9,7 +9,8 @@ use WritePoetry\ContentBridge\Interfaces\{
 };
 use WritePoetry\ContentBridge\Factories\WebhookPayloadFactory;
 
-class WebhookService implements ServiceInterface {
+class WebhookService implements ServiceInterface
+{
     public function __construct(
         private PluginConfig $config,
         private JwtGenerator $token,
@@ -21,14 +22,15 @@ class WebhookService implements ServiceInterface {
 
 
 
-    public function send( \WP_Post $post, ?string $event = null ): void {
+    public function send(\WP_Post $post, ?string $event = null): void
+    {
         if (empty($this->config->get('n8n_webhook_url')) || empty($this->config->get('n8n_jwt_secret'))) {
             return;
         }
 
         $payload = $this->payloadFactory->make($post);
         $payload['event'] = $event;
-        
+
         $token = $this->token->generate(
             array(
                 'post_id' => $post->ID,

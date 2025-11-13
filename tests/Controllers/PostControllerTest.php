@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Class PostControllerTest
  *
@@ -16,12 +17,11 @@ use WritePoetry\ContentBridge\Services\ImageProcessor;
 use WritePoetry\ContentBridge\Services\WebhookService;
 use WritePoetry\ContentBridge\Tests\Environment\TestEnvironment;
 
-
 /**
  * Sample test case.
  */
-class PostControllerTest extends TestCase {
-
+class PostControllerTest extends TestCase
+{
     private ImageProcessor $imageProcessor;
     private WebhookService $webhookService;
     private PostController $controller;
@@ -56,7 +56,8 @@ class PostControllerTest extends TestCase {
         $this->addToAssertionCount(1);
     }
 
-    public function test_register_hooks_adds_expected_actions(): void {
+    public function test_register_hooks_adds_expected_actions(): void
+    {
         Functions\expect('add_action')
             ->once()
             ->with('updated_post_meta', [$this->controller, 'onThumbnailSet'], 10, 4);
@@ -70,13 +71,14 @@ class PostControllerTest extends TestCase {
         Functions\expect('add_action')
             ->once()
             ->with('post_updated', [$this->controller, 'handleUpdate'], 10, 3);
-        
+
         $this->controller->registerHooks();
         $this->addToAssertionCount(1);
     }
 
-    public function test_on_thumbnail_set_calls_cropimage_when_key_matches(): void {
-      
+    public function test_on_thumbnail_set_calls_cropimage_when_key_matches(): void
+    {
+
         $this->imageProcessor->expects($this->once())
             ->method('cropImage')
             ->with(123, 600, 900, 'vertical');
@@ -90,7 +92,8 @@ class PostControllerTest extends TestCase {
      * @preserveGlobalState disabled
      * @return void
      */
-    public function  test_on_post_saved_sends_webhook_when_valid(): void {
+    public function test_on_post_saved_sends_webhook_when_valid(): void
+    {
 
         // Create a mock WP_Post object
         $post = Mockery::mock('overload:WP_Post');
@@ -106,14 +109,14 @@ class PostControllerTest extends TestCase {
         $this->webhookService->expects($this->once())->method('send')->with($post);
 
         $this->controller->onPostSaved(1, $post, false);
-
     }
 
     /**
      * Test that handle_publish sends a webhook when a post is published.
      * @return void
      */
-    public function test_handle_publish_sends_webhook_when_post_published(): void {
+    public function test_handle_publish_sends_webhook_when_post_published(): void
+    {
 
         // Create a mock WP_Post object
         $post = Mockery::mock('overload:WP_Post');
@@ -121,12 +124,11 @@ class PostControllerTest extends TestCase {
         $post->post_status = 'publish';
         $post->ID = 1;
 
-    
+
         $this->webhookService->expects($this->once())
             ->method('send')
             ->with($this->equalTo($post));
 
         $this->controller->handlePublish('publish', 'draft', $post);
     }
-
 }

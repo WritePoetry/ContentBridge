@@ -1,8 +1,8 @@
 <?php
 
-
 namespace WritePoetry\ContentBridge\Environment;
 
-interface EnvironmentInterface {
+interface EnvironmentInterface
+{
     public function get(string $key): ?string;
 }

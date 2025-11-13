@@ -4,7 +4,8 @@ namespace WritePoetry\ContentBridge\Services;
 
 use WritePoetry\ContentBridge\Interfaces\HttpClientInterface;
 
-class HttpClientService {
+class HttpClientService
+{
     public function __construct(
         private HttpClientInterface $httpClient
     ) {

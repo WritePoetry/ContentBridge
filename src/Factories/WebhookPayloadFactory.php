@@ -5,15 +5,16 @@ namespace WritePoetry\ContentBridge\Factories;
 use WritePoetry\ContentBridge\Interfaces\ImageAdapterInterface;
 use WritePoetry\ContentBridge\Services\ImageProcessor;
 
-
-class WebhookPayloadFactory {
+class WebhookPayloadFactory
+{
     public function __construct(
         private ImageAdapterInterface $imageAdapter,
         private ImageProcessor $imageProcessor
     ) {
     }
 
-    public function make( \WP_Post $post ): array {
+    public function make(\WP_Post $post): array
+    {
         $sizes = $this->imageAdapter->getFeaturedImageData($post->ID);
         // Fallback to default featured image ID if not set.
         $featuredImageId = get_post_thumbnail_id($post->ID)
