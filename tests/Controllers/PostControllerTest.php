@@ -89,13 +89,15 @@ class PostControllerTest extends TestCase
     }
 
     /**
-     * Test that on_post_saved sends a webhook when the post is valid.
+     * Test that handleUpdate a webhook when the post is valid.
      * @runTestsInSeparateProcesses
      * @preserveGlobalState disabled
      * @return void
      */
-    public function _test_on_post_saved_sends_webhook_when_valid(): void
+    public function test_on_post_saved_sends_webhook_when_valid(): void
     {
+        $this->markTestSkipped('Temporarily disabled');
+
         // Create a mock WP_Post object
         $post = Mockery::mock('overload:WP_Post');
         $post->post_type = 'post';
