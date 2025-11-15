@@ -29,7 +29,7 @@ Add this filter in your theme or plugin to override the default featured image u
 add_filter(
     'writepoetry_contentbridge_default_featured_image',
     function () {
-        return 21; // nuovo ID immagine di default.
+        return 21; // new default image ID.
     }
 );
 ``` 
