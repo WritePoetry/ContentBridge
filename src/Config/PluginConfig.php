@@ -14,7 +14,7 @@ class PluginConfig
             'n8n_jwt_secret' => $this->require('N8N_JWT_SECRET'),
             'n8n_webhook_url' => $this->require('N8N_WEBHOOK_URL'),
             'webapp_url' => $this->require('WEB_APP_URL'),
-            'webapp_token' => $this->require('WEB_APP_TOKEN'),
+            'webapp_secret' => $this->require('WEB_APP_SECRET'),
         ];
     }
 

@@ -2,21 +2,25 @@
 
 namespace WritePoetry\ContentBridge\Controllers;
 
-use WritePoetry\ContentBridge\Services\ImageProcessor;
-use WritePoetry\ContentBridge\Services\WebhookService;
+use WritePoetry\ContentBridge\Services\{
+    ImageProcessor,
+    GoogleSheetsService,
+    WebhookService
+
+};
 
 class PostController
 {
     public function __construct(
         private ImageProcessor $imageProcessor,
-        private WebhookService $webhookService
+        private WebhookService $webhookService,
+        private GoogleSheetsService $googleSheetsService
     ) {
     }
 
     public function registerHooks(): void
     {
         add_action('updated_post_meta', [$this, 'onThumbnailSet'], 10, 4);
-        add_action('save_post', [$this, 'onPostSaved'], 10, 3);
         add_action('transition_post_status', [$this, 'handlePublish'], 10, 3);
         add_action('post_updated', [$this, 'handleUpdate'], 10, 3);
     }
@@ -31,20 +35,6 @@ class PostController
         $this->imageProcessor->cropImage($imageId, 600, 900, 'vertical');
     }
 
-    public function onPostSaved(int $post_id, \WP_Post $post, bool $update): void
-    {
-        // Skip if this is a post revision or if post is not published.
-        if (wp_is_post_revision($post_id) || wp_is_post_autosave($post_id) || get_post_status($post_id) != 'publish') {
-            return;
-        }
-
-        if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
-            return;
-        }
-
-        $this->dispatchWebhook($post, 'update');
-    }
-
 
     public function handlePublish(string $new_status, string $old_status, \WP_Post $post): void
     {
@@ -55,28 +45,37 @@ class PostController
         $this->dispatchWebhook($post, 'publish');
     }
 
+
     public function handleUpdate(int $post_ID, \WP_Post $post_after, \WP_Post $post_before): void
     {
+        if (
+            $post_after->post_title        === $post_before->post_title &&
+            $post_after->post_content      === $post_before->post_content &&
+            $post_after->post_modified_gmt === $post_before->post_modified_gmt
+        ) {
+            return;
+        }
+
+        // Skip if this is a post revision or if post is not published.
         if ('publish' !== $post_after->post_status) {
             return;
         }
 
-        $this->webhookService->send($post_after, 'update');
+        $this->dispatchWebhook($post_after, 'update');
     }
 
     private function dispatchWebhook(\WP_Post $post, string $event): void
     {
-        // If you need to extend allowed post types, add them here ('post', 'page', 'product').
-        $allowed_types = [ 'post' ];
-        if (! in_array($post->post_type, $allowed_types, true)) {
-            return;
-        }
-
-
         if (! $post instanceof \WP_Post) {
             return;
         }
 
-        $this->webhookService->send($post, $event);
+        if ($event === 'update') {
+            $this->googleSheetsService->handlePublish();
+        }
+
+        if ($post->post_type === 'post') {
+            $this->webhookService->send($post, $event);
+        }
     }
 }

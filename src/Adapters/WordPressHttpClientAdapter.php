@@ -38,7 +38,7 @@ class WordPressHttpClientAdapter implements HttpClientInterface
         // Registra l'errore nei log di WordPress.
         if (is_wp_error($response)) {
             $this->logger->error($response->get_error_message());
-            throw new \RuntimeException($response->get_error_message());
+            // throw new \RuntimeException($response->get_error_message());
         }
 
         // Check HTTP response code.

@@ -22,3 +22,14 @@ Sets up the WordPress testing environment by creating the test database and inst
 ``` bash
 ./bin/install-wp-tests.sh wordpress_test root root "localhost:/tmp/mysql_socket/mysqld.sock" latest
 ```
+
+## Hook use: Default Featured Image Override
+Add this filter in your theme or plugin to override the default featured image used by ContentBridge. The hook forces the system to return the specified image ID as the new default.
+``` php
+add_filter(
+    'writepoetry_contentbridge_default_featured_image',
+    function () {
+        return 21; // nuovo ID immagine di default.
+    }
+);
+``` 

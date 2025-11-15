@@ -66,7 +66,8 @@ $builder->addDefinitions(
         PostController::class        => DI\create(PostController::class)
                 ->constructor(
                     DI\get(ImageProcessor::class),
-                    DI\get(WebhookService::class)
+                    DI\get(WebhookService::class),
+                    DI\get(GoogleSheetsService::class)
                 ),
         WebhookPayloadFactory::class => DI\create(WebhookPayloadFactory::class)
                 ->constructor(

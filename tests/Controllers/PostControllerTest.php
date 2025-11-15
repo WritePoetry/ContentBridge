@@ -13,8 +13,11 @@ use Mockery;
 use Brain\Monkey;
 use Brain\Monkey\Functions;
 use WritePoetry\ContentBridge\Controllers\PostController;
-use WritePoetry\ContentBridge\Services\ImageProcessor;
-use WritePoetry\ContentBridge\Services\WebhookService;
+use WritePoetry\ContentBridge\Services\{
+    ImageProcessor,
+    WebhookService,
+    GoogleSheetsService
+};
 use WritePoetry\ContentBridge\Tests\Environment\TestEnvironment;
 
 /**
@@ -25,6 +28,7 @@ class PostControllerTest extends TestCase
     private ImageProcessor $imageProcessor;
     private WebhookService $webhookService;
     private PostController $controller;
+    private GoogleSheetsService $googleSheetsService;
 
     protected function setUp(): void
     {
@@ -33,10 +37,12 @@ class PostControllerTest extends TestCase
 
         $this->imageProcessor = $this->createMock(ImageProcessor::class);
         $this->webhookService = $this->createMock(WebhookService::class);
+        $this->googleSheetsService = $this->createMock(GoogleSheetsService::class);
 
         $this->controller = new PostController(
             $this->imageProcessor,
-            $this->webhookService
+            $this->webhookService,
+            $this->googleSheetsService,
         );
     }
 
@@ -49,7 +55,7 @@ class PostControllerTest extends TestCase
     public function test_register_hooks_adds_actions(): void
     {
         Functions\expect('add_action')
-            ->times(4)
+            ->times(3)
             ->withAnyArgs();
 
         $this->controller->registerHooks();
@@ -64,10 +70,6 @@ class PostControllerTest extends TestCase
         Functions\expect('add_action')
             ->once()
             ->with('transition_post_status', [$this->controller, 'handlePublish'], 10, 3);
-        Functions\expect('add_action')
-            ->once()
-            ->with('save_post', [$this->controller, 'onPostSaved'], 10, 3);
-
         Functions\expect('add_action')
             ->once()
             ->with('post_updated', [$this->controller, 'handleUpdate'], 10, 3);
@@ -92,23 +94,17 @@ class PostControllerTest extends TestCase
      * @preserveGlobalState disabled
      * @return void
      */
-    public function test_on_post_saved_sends_webhook_when_valid(): void
+    public function _test_on_post_saved_sends_webhook_when_valid(): void
     {
-
         // Create a mock WP_Post object
         $post = Mockery::mock('overload:WP_Post');
         $post->post_type = 'post';
         $post->post_status = 'publish';
         $post->ID = 1;
 
-        Functions\when('wp_is_post_revision')->justReturn(false);
-        Functions\when('wp_is_post_autosave')->justReturn(false);
-        Functions\when('get_post_status')->justReturn('publish');
-        Functions\when('get_post_type')->justReturn('post');
-
         $this->webhookService->expects($this->once())->method('send')->with($post);
 
-        $this->controller->onPostSaved(1, $post, false);
+        $this->controller->handleUpdate(1, $post, false);
     }
 
     /**

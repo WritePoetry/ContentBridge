@@ -27,7 +27,7 @@ class PluginConfigTest extends TestCase
             'N8N_JWT_SECRET' => 'secret',
             'N8N_WEBHOOK_URL' => 'https://example.com',
             'WEB_APP_URL' => 'https://app.example.com',
-            'WEB_APP_TOKEN' => 12345,
+            'WEB_APP_SECRET' => 12345,
         ]);
     }
 
@@ -57,7 +57,7 @@ class PluginConfigTest extends TestCase
                 'expectedValue' => 'secret',
             ],
             'Numeric value' => [
-                'key'   => 'webapp_token',
+                'key'   => 'webapp_secret',
                 'expectedValue' => 12345,
             ]
         ];

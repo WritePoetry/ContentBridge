@@ -13,12 +13,12 @@ class GoogleSheetsService implements ServiceInterface
     ) {
     }
 
-    public function handlePublish(int $post_id): void
+    public function handlePublish(): void
     {
         $this->httpClient->post(
             $this->config->get('webapp_url'),
-            null,
-            array( 'Authorization' => 'Bearer ' . $this->config->get('webapp_token') ),
+            ['secret' => $this->config->get('webapp_secret')],
+            [],
             30
         );
     }

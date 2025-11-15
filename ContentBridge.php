@@ -44,11 +44,3 @@ add_action(
         add_image_size('vertical', 600, 900, true);
     }
 );
-
-
-add_filter(
-    'writepoetry_contentbridge_default_featured_image',
-    function () {
-        return 21; // nuovo ID immagine di default.
-    }
-);
