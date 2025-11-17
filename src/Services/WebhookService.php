@@ -12,7 +12,6 @@ use WritePoetry\ContentBridge\Factories\WebhookPayloadFactory;
 class WebhookService implements ServiceInterface
 {
     public function __construct(
-        private PluginConfig $config,
         private JwtGenerator $token,
         private HttpClientService $httpClient,
         private LoggerInterface $logger,
@@ -22,28 +21,33 @@ class WebhookService implements ServiceInterface
 
 
 
-    public function send(\WP_Post $post, ?string $event = null): void
+    public function send(\WP_Post $post, array $spec, ?string $event = null): void
     {
-        if (empty($this->config->get('n8n_webhook_url')) || empty($this->config->get('n8n_jwt_secret'))) {
+
+        $url = $spec['url'] ?? null;
+        if (!$url) {
             return;
         }
 
-        $payload = $this->payloadFactory->make($post);
-        $payload['event'] = $event;
+        $payload = $spec['payload'] ?? [];
+        if (($spec['payload']['type'] ?? null) === 'post') {
+            $payload = $this->payloadFactory->make($post);
+            $payload['event'] = $event;
+        }
 
-        $token = $this->token->generate(
-            array(
-                'post_id' => $post->ID,
-                'title'   => $post->post_title,
-            ),
-            $this->config->get('n8n_jwt_secret')
-        );
+        $headers = [];
+        if (!empty($spec['secret'])) {
+            $token = $this->token->generate(
+                [
+                    'post_id' => $post->ID,
+                    'title' => $post->post_title
+                ],
+                $spec['secret']
+            );
+            $headers['Authorization'] = 'Bearer ' . $token;
+        }
 
-        $this->httpClient->post(
-            $this->config->get('n8n_webhook_url'),
-            $payload,
-            array( 'Authorization' => 'Bearer ' . $token ),
-            10
-        );
+
+        $this->httpClient->post($url, $payload, $headers, $spec['timeout'] ?? 10);
     }
 }

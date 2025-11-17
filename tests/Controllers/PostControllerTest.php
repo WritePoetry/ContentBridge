@@ -15,8 +15,7 @@ use Brain\Monkey\Functions;
 use WritePoetry\ContentBridge\Controllers\PostController;
 use WritePoetry\ContentBridge\Services\{
     ImageProcessor,
-    WebhookService,
-    GoogleSheetsService
+    WebhookService
 };
 use WritePoetry\ContentBridge\Tests\Environment\TestEnvironment;
 
@@ -28,7 +27,6 @@ class PostControllerTest extends TestCase
     private ImageProcessor $imageProcessor;
     private WebhookService $webhookService;
     private PostController $controller;
-    private GoogleSheetsService $googleSheetsService;
 
     protected function setUp(): void
     {
@@ -37,13 +35,26 @@ class PostControllerTest extends TestCase
 
         $this->imageProcessor = $this->createMock(ImageProcessor::class);
         $this->webhookService = $this->createMock(WebhookService::class);
-        $this->googleSheetsService = $this->createMock(GoogleSheetsService::class);
 
         $this->controller = new PostController(
             $this->imageProcessor,
             $this->webhookService,
-            $this->googleSheetsService,
         );
+
+        Functions\when('apply_filters')->alias(function ($hook, $default) {
+            if ($hook === 'writepoetry_contentbridge_service_config') {
+                return [
+                    'google_sheets' => [
+                        'url'       => 'https://example.com',
+                        'events'    => ['publish','update'], // include publish
+                        'post_type' => ['post'],
+                        'payload'   => ['access_key' => 'test'],
+                        'timeout'   => 10,
+                    ],
+                ];
+            }
+            return $default;
+        });
     }
 
     protected function tearDown(): void
@@ -94,19 +105,27 @@ class PostControllerTest extends TestCase
      * @preserveGlobalState disabled
      * @return void
      */
-    public function test_on_post_saved_sends_webhook_when_valid(): void
+    public function test_handleUpdate_post_saved_sends_webhook_when_valid(): void
     {
-        $this->markTestSkipped('Temporarily disabled');
-
         // Create a mock WP_Post object
-        $post = Mockery::mock('overload:WP_Post');
-        $post->post_type = 'post';
-        $post->post_status = 'publish';
-        $post->ID = 1;
+        // $post = Mockery::mock('overload:WP_Post');
+        $post_before = Mockery::mock('overload:WP_Post');
+        $post_before->post_type = 'post';
+        $post_before->post_status = 'publish';
+        $post_before->post_title = 'Old title';
+        $post_before->post_content = 'Old content';
+        $post_before->post_modified_gmt = '2025-11-17 12:00:00';
+        $post_before->ID = 1;
 
-        $this->webhookService->expects($this->once())->method('send')->with($post);
+        $post_after = clone $post_before;
+        $post_after->post_title = 'New title'; // cambiamento per trigger
+        $post_after->post_modified_gmt = '2025-11-17 12:10:00';
 
-        $this->controller->handleUpdate(1, $post, false);
+        $this->webhookService->expects($this->once())
+            ->method('send')
+            ->with($post_after, $this->anything(), 'update');
+
+        $this->controller->handleUpdate(1, $post_after, $post_before);
     }
 
     /**
@@ -115,18 +134,23 @@ class PostControllerTest extends TestCase
      */
     public function test_handle_publish_sends_webhook_when_post_published(): void
     {
-
         // Create a mock WP_Post object
-        $post = Mockery::mock('overload:WP_Post');
-        $post->post_type = 'post';
-        $post->post_status = 'publish';
-        $post->ID = 1;
+        $post_before = Mockery::mock('overload:WP_Post');
+        $post_before->post_type = 'post';
+        $post_before->post_status = 'draft';
+        $post_before->post_title = 'Title';
+        $post_before->post_content = 'Content';
+        $post_before->ID = 1;
+
+        $post_after = clone $post_before;
+        $post_after->post_status = 'publish';
 
 
-        $this->webhookService->expects($this->once())
+        $this->webhookService
+            ->expects($this->once())
             ->method('send')
-            ->with($this->equalTo($post));
+            ->with($post_after, $this->anything(), 'publish');
 
-        $this->controller->handlePublish('publish', 'draft', $post);
+        $this->controller->handlePublish('publish', 'draft', $post_after);
     }
 }

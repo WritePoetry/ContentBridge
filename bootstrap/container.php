@@ -26,7 +26,6 @@ use WritePoetry\ContentBridge\Interfaces\{
     ImageAdapterInterface
 };
 use WritePoetry\ContentBridge\Services\{
-    GoogleSheetsService,
     HttpClientService,
     ImageProcessor,
     JwtGenerator,
@@ -45,7 +44,6 @@ $builder->addDefinitions(
             ),
         WebhookService::class        => DI\create(WebhookService::class)
             ->constructor(
-                DI\get(PluginConfig::class),
                 DI\get(JwtGenerator::class),
                 DI\get(HttpClientService::class),
                 DI\get(LoggerInterface::class),
@@ -58,16 +56,10 @@ $builder->addDefinitions(
                 ->constructor(
                     DI\get(HttpClientInterface::class)
                 ),
-        GoogleSheetsService::class   => DI\create(GoogleSheetsService::class)
-                ->constructor(
-                    DI\get(PluginConfig::class),
-                    DI\get(HttpClientService::class),
-                ),
         PostController::class        => DI\create(PostController::class)
                 ->constructor(
                     DI\get(ImageProcessor::class),
                     DI\get(WebhookService::class),
-                    DI\get(GoogleSheetsService::class)
                 ),
         WebhookPayloadFactory::class => DI\create(WebhookPayloadFactory::class)
                 ->constructor(

@@ -4,9 +4,7 @@ namespace WritePoetry\ContentBridge\Controllers;
 
 use WritePoetry\ContentBridge\Services\{
     ImageProcessor,
-    GoogleSheetsService,
     WebhookService
-
 };
 
 class PostController
@@ -14,7 +12,6 @@ class PostController
     public function __construct(
         private ImageProcessor $imageProcessor,
         private WebhookService $webhookService,
-        private GoogleSheetsService $googleSheetsService
     ) {
     }
 
@@ -42,7 +39,7 @@ class PostController
             return;
         }
 
-        $this->dispatchWebhook($post, 'publish');
+        $this->dispatch($post, 'publish');
     }
 
 
@@ -61,21 +58,27 @@ class PostController
             return;
         }
 
-        $this->dispatchWebhook($post_after, 'update');
+        $this->dispatch($post_after, 'update');
     }
 
-    private function dispatchWebhook(\WP_Post $post, string $event): void
+    private function dispatch(\WP_Post $post, string $event): void
     {
         if (! $post instanceof \WP_Post) {
             return;
         }
 
-        if ($event === 'update') {
-            $this->googleSheetsService->handlePublish();
-        }
+        $config = apply_filters('writepoetry_contentbridge_service_config', []);
 
-        if ($post->post_type === 'post') {
-            $this->webhookService->send($post, $event);
+        foreach ($config as $key => $data) {
+            if (!in_array($event, $data['events'], true)) {
+                continue;
+            }
+
+            if (!in_array($post->post_type, $data['post_type'], true)) {
+                continue;
+            }
+
+            $this->webhookService->send($post, $data, $event);
         }
     }
 }
