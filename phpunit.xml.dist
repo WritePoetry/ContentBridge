@@ -10,11 +10,6 @@
 	<php>
 		<!-- <env name="WP_TESTS_DIR" value=""/> -->
 		<!-- <env name="WP_TESTS_PHPUNIT_POLYFILLS_PATH" value="path/to/yoast/phpunit-polyfills"/> -->
-
-		<env name="N8N_JWT_SECRET" value="test-secret"/>
-		<env name="N8N_WEBHOOK_URL" value="http://test.com"/>
-		<env name="WEB_APP_URL" value="http://test.com"/>
-		<env name="WEB_APP_SECRET" value="test-token"/>
 	</php>
 	<testsuites>
 		<testsuite name="testing">

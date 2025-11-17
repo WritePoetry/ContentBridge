@@ -10,12 +10,15 @@ class PluginConfig
 
     public function __construct(private EnvironmentInterface $env)
     {
+        // mandatory keys
         $this->config = [
-            'n8n_jwt_secret' => $this->require('N8N_JWT_SECRET'),
-            'n8n_webhook_url' => $this->require('N8N_WEBHOOK_URL'),
-            'webapp_url' => $this->require('WEB_APP_URL'),
-            'webapp_secret' => $this->require('WEB_APP_SECRET'),
+            // 'example' => $this->require('EXAMPLE'),
         ];
+
+        // optional keys
+        $this->config['brevo_lists'] = $this->env->get('BREVO_LIST_IDS') ?? null;
+        $this->config['brevo_sender'] = $this->env->get('BREVO_SENDER_ID') ?? null;
+        $this->config['brevo_template'] = $this->env->get('BREVO_TEMPLATE_ID') ?? null;
     }
 
     private function require(string $key): string

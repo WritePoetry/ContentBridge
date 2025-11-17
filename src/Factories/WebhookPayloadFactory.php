@@ -4,12 +4,16 @@ namespace WritePoetry\ContentBridge\Factories;
 
 use WritePoetry\ContentBridge\Interfaces\ImageAdapterInterface;
 use WritePoetry\ContentBridge\Services\ImageProcessor;
+use WritePoetry\ContentBridge\Config\PluginConfig;
+
+
 
 class WebhookPayloadFactory
 {
     public function __construct(
+        private PluginConfig $config,
         private ImageAdapterInterface $imageAdapter,
-        private ImageProcessor $imageProcessor
+        private ImageProcessor $imageProcessor,
     ) {
     }
 
@@ -37,9 +41,9 @@ class WebhookPayloadFactory
                 'email' => get_the_author_meta('user_email', $post->post_author),
             ),
             'brevo'  => array(
-                'list_ids'    => BREVO_LIST_IDS ?? array(),
-                'sender_id'   => BREVO_SENDER_ID,
-                'template_id' => BREVO_TEMPLATE_ID ?? null,
+                'list_ids'    => $this->config->get('brevo_lists') ?? array(),
+                'sender_id'   => (int) $this->config->get('brevo_sender'),
+                'template_id' => (int) $this->config->get('brevo_template') ?? null,
             ),
         );
     }

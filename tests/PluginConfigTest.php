@@ -24,10 +24,9 @@ class PluginConfigTest extends TestCase
         parent::setUp();
 
         $this->env = new TestEnvironment([
-            'N8N_JWT_SECRET' => 'secret',
-            'N8N_WEBHOOK_URL' => 'https://example.com',
-            'WEB_APP_URL' => 'https://app.example.com',
-            'WEB_APP_SECRET' => 12345,
+            'BREVO_LIST_IDS' => 1,
+            'BREVO_SENDER_ID' => 1,
+            'BREVO_TEMPLATE_ID' => 1
         ]);
     }
 
@@ -46,19 +45,18 @@ class PluginConfigTest extends TestCase
 
 
         $this->assertEquals($expectedValue, $config->get($key));
-        // $this->assertSame('https://example.com', $config->get('n8n_webhook_url'));
     }
 
     public static function configKeysProvider(): iterable
     {
         return [
             'String value' => [
-                'key'   => 'n8n_jwt_secret',
-                'expectedValue' => 'secret',
+                'key'   => 'brevo_template',
+                'expectedValue' => 1,
             ],
             'Numeric value' => [
-                'key'   => 'webapp_secret',
-                'expectedValue' => 12345,
+                'key'   => 'brevo_sender',
+                'expectedValue' => 1,
             ]
         ];
     }

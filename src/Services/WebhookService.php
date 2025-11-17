@@ -2,7 +2,6 @@
 
 namespace WritePoetry\ContentBridge\Services;
 
-use WritePoetry\ContentBridge\Config\PluginConfig;
 use WritePoetry\ContentBridge\Interfaces\{
     LoggerInterface,
     ServiceInterface

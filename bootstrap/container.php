@@ -63,6 +63,7 @@ $builder->addDefinitions(
                 ),
         WebhookPayloadFactory::class => DI\create(WebhookPayloadFactory::class)
                 ->constructor(
+                    DI\get(PluginConfig::class),
                     DI\get(ImageAdapterInterface::class),
                     DI\get(ImageProcessor::class)
                 ),
