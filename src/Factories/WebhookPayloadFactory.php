@@ -6,8 +6,6 @@ use WritePoetry\ContentBridge\Interfaces\ImageAdapterInterface;
 use WritePoetry\ContentBridge\Services\ImageProcessor;
 use WritePoetry\ContentBridge\Config\PluginConfig;
 
-
-
 class WebhookPayloadFactory
 {
     public function __construct(
