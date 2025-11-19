@@ -9,9 +9,9 @@ on:
 
 jobs:
   call_shared_tests:
-    uses: WritePoetry/reusable-workflows/.github/workflows/php-tests.yml@main
+    uses: WritePoetry/reusable-workflows/.github/workflows/php-tests.yml@v1
     with:
-      php_versions: "['8.2','8.3']"
+      php_versions: "['8.1','8.2','8.3']"
     permissions:
       contents: read
       actions: read

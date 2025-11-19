@@ -3,7 +3,7 @@
     "description": "Sends post data to n8n via webhook with JWT authentication.",
     "require": {
         "php-di/php-di": "^7.1",
-        "php": ">=8.2",
+        "php": ">=8.1",
         "afragen/git-updater-lite": "^2.3"
     },
     "require-dev": {

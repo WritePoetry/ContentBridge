@@ -10,7 +10,7 @@ jobs:
   run_tests_first:
     uses: WritePoetry/reusable-workflows/.github/workflows/php-tests.yml@v1
     with:
-      php_versions: "['8.2','8.3']"
+      php_versions: "['8.1','8.2','8.3']"
     secrets: inherit
 
   call_shared_release:
