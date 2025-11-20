@@ -23,7 +23,7 @@
 			"@php ./vendor/bin/phpcbf --report=summary,source"
 		],
         "test": [
-			"@php ./vendor/bin/phpunit  --testdox"
+			"@php ./vendor/bin/phpunit  -c phpunit-9.xml --testdox"
 		],
         "coverage": [
 			"@php ./vendor/bin/phpunit --coverage-html ./coverage-report"

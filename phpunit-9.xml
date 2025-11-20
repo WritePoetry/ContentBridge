@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<phpunit
+	bootstrap="tests/bootstrap.php"
+	backupGlobals="false"
+	colors="true"
+	failOnWarning="true"
+	>
+	<php>
+		<!-- <env name="WP_TESTS_DIR" value=""/> -->
+		<!-- <env name="WP_TESTS_PHPUNIT_POLYFILLS_PATH" value="path/to/yoast/phpunit-polyfills"/> -->
+	</php>
+	<testsuites>
+		<testsuite name="testing">
+			<directory suffix="Test.php">./tests/</directory>
+			<exclude>./tests/SampleTest.php</exclude>
+		</testsuite>
+	</testsuites>
+</phpunit>
