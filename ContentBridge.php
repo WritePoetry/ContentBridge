@@ -1,9 +1,9 @@
 <?php
-
+// phpcs:ignore WordPress.WP.PluginDescriptionLongText
 /**
  * Plugin Name:     ContentBridge
  * Plugin URI:      https://github.com/WritePoetry/ContentBridge
- * Description:     Sends post data to any number of configurable external webhook services with optional JWT authentication.  // phpcs:ignore WordPress.WP.PluginDescriptionLongText
+ * Description:     Sends post data to any number of configurable external webhook services with optional JWT authentication.
  * Author:          Giacomo Secchi
  * Author URI:      https://resume.giacomosecchi.com/
  * Text Domain:     contentbridge
