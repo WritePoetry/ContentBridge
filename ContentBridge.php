@@ -33,14 +33,8 @@ add_action(
     'plugins_loaded',
     function () use ($container) {
         $container->get(PostController::class)->registerHooks();
-    }
-);
 
-
-add_action(
-    'plugins_loaded',
-    function () {
-        // Registra la dimensione verticale: 600x900, crop forzato.
+        // Register the vertical size: 600x900, forced crop.
         add_image_size('vertical', 600, 900, true);
     }
 );

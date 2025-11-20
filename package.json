@@ -4,6 +4,7 @@
   "description": "",
   "files": [
     "bootstrap",
+    "src",
     "vendor",
     "ContentBridge.php"
   ],
