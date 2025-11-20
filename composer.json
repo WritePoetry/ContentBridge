@@ -9,10 +9,10 @@
     "require-dev": {
         "wp-cli/i18n-command": "^2.6",
         "wp-coding-standards/wpcs": "^3.2",
-        "phpunit/phpunit": "^11.5",
         "yoast/phpunit-polyfills": "^4.0",
         "brain/monkey": "^2.6",
-        "phpcompatibility/phpcompatibility-wp": "^2.1"
+        "phpcompatibility/phpcompatibility-wp": "^2.1",
+        "phpunit/phpunit": "^9.6"
     },
     "scripts": {
         "makepot": "wp i18n make-pot .",
