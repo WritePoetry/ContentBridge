@@ -31,7 +31,7 @@ class WebhookService implements ServiceInterface
         $payload = $spec['payload'] ?? [];
         if (($spec['payload']['type'] ?? null) === 'post') {
             $payload = $this->payloadFactory->make($post);
-            $payload['event'] = $event;
+            // $payload['event'] = $event;
         }
 
         $headers = [];

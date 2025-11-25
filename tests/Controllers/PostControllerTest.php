@@ -33,20 +33,13 @@ class PostControllerTest extends TestCase
         parent::setUp();
         Monkey\setUp();
 
-        $this->imageProcessor = $this->createMock(ImageProcessor::class);
-        $this->webhookService = $this->createMock(WebhookService::class);
-
-        $this->controller = new PostController(
-            $this->imageProcessor,
-            $this->webhookService,
-        );
 
         Functions\when('apply_filters')->alias(function ($hook, $default) {
             if ($hook === 'writepoetry_contentbridge_service_config') {
                 return [
-                    'google_sheets' => [
+                    'service_test' => [
                         'url'       => 'https://example.com',
-                        'events'    => ['publish','update'], // include publish
+                        'events'    => ['transition_post_status','post_updated'],
                         'post_type' => ['post'],
                         'payload'   => ['access_key' => 'test'],
                         'timeout'   => 10,
@@ -55,6 +48,14 @@ class PostControllerTest extends TestCase
             }
             return $default;
         });
+
+        $this->imageProcessor = $this->createMock(ImageProcessor::class);
+        $this->webhookService = $this->createMock(WebhookService::class);
+
+        $this->controller = new PostController(
+            $this->imageProcessor,
+            $this->webhookService,
+        );
     }
 
     protected function tearDown(): void
@@ -80,10 +81,10 @@ class PostControllerTest extends TestCase
             ->with('updated_post_meta', [$this->controller, 'onThumbnailSet'], 10, 4);
         Functions\expect('add_action')
             ->once()
-            ->with('transition_post_status', [$this->controller, 'handlePublish'], 10, 3);
+            ->with('transition_post_status', [$this->controller, 'transitionPostStatus'], 10, 3);
         Functions\expect('add_action')
             ->once()
-            ->with('post_updated', [$this->controller, 'handleUpdate'], 10, 3);
+            ->with('post_updated', [$this->controller, 'postUpdated'], 10, 3);
 
         $this->controller->registerHooks();
         $this->addToAssertionCount(1);
@@ -123,9 +124,9 @@ class PostControllerTest extends TestCase
 
         $this->webhookService->expects($this->once())
             ->method('send')
-            ->with($post_after, $this->anything(), 'update');
+            ->with($post_after, $this->anything());
 
-        $this->controller->handleUpdate(1, $post_after, $post_before);
+        $this->controller->postUpdated(1, $post_after, $post_before);
     }
 
     /**
@@ -149,8 +150,8 @@ class PostControllerTest extends TestCase
         $this->webhookService
             ->expects($this->once())
             ->method('send')
-            ->with($post_after, $this->anything(), 'publish');
+            ->with($post_after, $this->anything());
 
-        $this->controller->handlePublish('publish', 'draft', $post_after);
+        $this->controller->transitionPostStatus('publish', 'draft', $post_after);
     }
 }

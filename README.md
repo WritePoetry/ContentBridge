@@ -22,8 +22,8 @@ Sets up the WordPress testing environment by creating the test database and inst
 ``` bash
 ./bin/install-wp-tests.sh wordpress_test root root "localhost:/tmp/mysql_socket/mysqld.sock" latest
 ```
-
-## Hook use: Default Featured Image Override
+## ContentBridge Inner Hooks
+### Default Featured Image Override
 Add this filter in your theme or plugin to override the default featured image used by ContentBridge. The hook forces the system to return the specified image ID as the new default.
 ``` php
 add_filter(
@@ -33,3 +33,30 @@ add_filter(
     }
 );
 ``` 
+
+### Service Configuration Injection
+Define external services, events, and payloads used by ContentBridge. Each key represents an integration. The filter must return an array of service definitions.
+``` php
+add_filter('writepoetry_contentbridge_service_config', function () {
+    return [
+        'service1' => [
+            'url' => 'https://localhost/webhook/36f8013-4da4-4359-831b-8ab335b6524f',
+            'secret' => '8Cp6Q8kYB8VeFZgwBdkSsOvJGarIq+LVlH/VrCkdimqXErDTFvIu552YDDqS+1V1pcGhBxZr341WFww70iudGw==',
+            'events' => ['transition_post_status', 'post_updated'],
+            'post_type' => ['post'],
+            'payload' => [
+                'type' => 'post'
+            ]
+        ],
+        'service2' => [
+            'url' => 'https:/api.test.com',
+            'events' => ['post_updated'],
+            'payload' => [
+                'access_key' => 'RZwl0WLTRq9f6YTX57OvjjQRoRJCCbwMIWjOwmHspiI='
+            ],
+            'post_type' => ['post', 'page'],
+            'timeout' => 30
+        ],
+    ];
+});
+```
