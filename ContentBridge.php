@@ -9,7 +9,7 @@
  * Author URI:      https://resume.giacomosecchi.com/
  * Text Domain:     contentbridge
  * Domain Path:     /languages
- * Version:         0.2.1
+ * Version:         0.2.2
  * License:         GPL v2 or later
  *
  * @package         ContentBridge
