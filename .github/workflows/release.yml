@@ -13,9 +13,16 @@ jobs:
       php_versions: "['8.1','8.2','8.3']"
     secrets: inherit
 
+  build:
+      needs: run_tests_first
+      uses: WritePoetry/reusable-workflows/.github/workflows/build.yml@main
+      secrets: inherit
+
   call_shared_release:
     needs: run_tests_first
-    uses: WritePoetry/reusable-workflows/.github/workflows/release.yml@v1
+    uses: WritePoetry/reusable-workflows/.github/workflows/release.yml@main
+    with:
+      artifact_name: ${{ github.event.repository.name }}-build
     permissions:
       contents: write
       packages: read
