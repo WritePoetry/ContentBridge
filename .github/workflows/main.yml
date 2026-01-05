@@ -7,26 +7,25 @@ on:
       - '[0-9]+\.[0-9]+\.[0-9]+'
 
 jobs:
-  run_tests_first:
+  run_tests:
     uses: WritePoetry/reusable-workflows/.github/workflows/php-tests.yml@v1
     with:
       php_versions: "['8.1','8.2','8.3']"
     secrets: inherit
 
   build:
-      needs: run_tests_first
+      needs: run_tests
       uses: WritePoetry/reusable-workflows/.github/workflows/build.yml@main
+      create_zip: true
       permissions:
         contents: write
         packages: read
         actions: read
       secrets: inherit
 
-  call_shared_release:
-    needs: run_tests_first
-    uses: WritePoetry/reusable-workflows/.github/workflows/release.yml@main
-    with:
-      artifact_name: ${{ github.event.repository.name }}-build
+  create_release:
+    needs: build
+    uses: WritePoetry/reusable-workflows/.github/workflows/create-release.yml@main
     permissions:
       contents: write
       packages: read
