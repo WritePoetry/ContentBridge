@@ -16,6 +16,10 @@ jobs:
   build:
       needs: run_tests_first
       uses: WritePoetry/reusable-workflows/.github/workflows/build.yml@main
+      permissions:
+        contents: write
+        packages: read
+        actions: read
       secrets: inherit
 
   call_shared_release:
