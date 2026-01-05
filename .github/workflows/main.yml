@@ -16,7 +16,8 @@ jobs:
   build:
       needs: run_tests
       uses: WritePoetry/reusable-workflows/.github/workflows/build.yml@main
-      create_zip: true
+      with:
+        create_zip: true
       permissions:
         contents: write
         packages: read
